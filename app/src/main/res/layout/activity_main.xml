@@ -19,8 +19,6 @@
             android:layoutDirection="rtl"
             app:layout_constraintTop_toTopOf="parent"
             app:logo="@drawable/ic_digikala_white_24dp"
-            app:navigationIcon="@drawable/ic_hamburger"
-            app:title=""
             app:titleTextColor="#ffffff" />
 
         <FrameLayout

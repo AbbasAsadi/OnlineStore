@@ -66,8 +66,8 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         // Handle Navigation Item Click
         int id = item.getItemId();
 
-        switch (id) {
-            case R.id.activity_main_drawer_news:
+        /*switch (id) {
+            case R.id.activity_main_drawer_home:
                 break;
             case R.id.activity_main_drawer_profile:
                 break;
@@ -75,7 +75,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                 break;
             default:
                 break;
-        }
+        }*/
 
         this.drawerLayout.closeDrawer(GravityCompat.START);
 

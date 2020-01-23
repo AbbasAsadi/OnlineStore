@@ -4,14 +4,14 @@
 
     <item android:title="search"
         android:id="@+id/search_menuitem"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/ic_search_24dp"
         app:showAsAction="always"/>
     <item android:title="shopping bag"
         android:id="@+id/shopping_bag_menuitem"
-        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:icon="@drawable/ic_shopping_24dp_white"
         app:showAsAction="always"/>
     <item android:title="personal area"
         android:id="@+id/personal_area_menuitem"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/ic_person_24dp"
         app:showAsAction="always"/>
 </menu>

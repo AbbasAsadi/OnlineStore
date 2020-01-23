@@ -8,11 +8,11 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/activity_main_drawer_home"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_home_24dp"
             android:title="خانه" />
         <item
             android:id="@+id/activity_main_drawer_category"
-            android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+            android:icon="@drawable/ic_format_list_bulleted_24dp"
             android:title="لیست دسته بندی محصولات" />
     </group>
 
@@ -23,7 +23,7 @@
 
         <item
             android:id="@+id/activity_main_drawer_shopping_basket"
-            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:icon="@drawable/ic_shopping_24dp_gray"
             android:title="سبد خرید" />
     </group>
 
@@ -55,11 +55,11 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/activity_main_drawer_settings"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:icon="@drawable/ic_setting_24dp"
             android:title="تنظیمات" />
         <item
             android:id="@+id/activity_main_drawer_faq"
-            android:icon="@drawable/ic_help_outline_black_24dp"
+            android:icon="@drawable/ic_help_24dp"
             android:title="سئوالات متداول" />
 
         <item

@@ -9,12 +9,17 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.onlinestore.utils.utils.sliderr.MainSliderAdapter;
+import com.example.onlinestore.utils.utils.sliderr.PicassoImageLoadingService;
+
+import ss.com.bannerslider.Slider;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
-
+    private Slider mSlider;
 
     public MainFragment() {
         // Required empty public constructor
@@ -32,6 +37,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Slider.init(new PicassoImageLoadingService());
 
     }
 
@@ -40,9 +46,13 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
+        mSlider = view.findViewById(R.id.slider_main_fragment);
+        mSlider.setAdapter(new MainSliderAdapter());
         return view;
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 }

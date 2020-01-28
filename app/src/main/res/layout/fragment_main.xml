@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
+    android:layoutDirection="rtl"
     tools:context=".MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/timer_background_gray"
                 android:padding="5dp"
-                android:text="02"
+                android:text="24"
                 android:textColor="#fff"
                 android:textSize="20dp" />
 
@@ -96,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/timer_background_gray"
                 android:padding="5dp"
-                android:text="24"
+                android:text="02"
                 android:textColor="#fff"
                 android:textSize="20dp" />
 

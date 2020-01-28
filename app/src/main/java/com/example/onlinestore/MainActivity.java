@@ -1,5 +1,7 @@
 package com.example.onlinestore;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +20,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
-
+    public static Intent newIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
     @Override
     public Fragment getFragment() {
         return MainFragment.newInstance();

@@ -102,7 +102,7 @@ public class WoocommerceRepository {
     }
 
 
-    public List<WoocommerceBody> getRecentProductList() {
+    public List<WoocommerceBody> getNewestProductList() {
         return mRecentProducts;
     }
 
@@ -114,15 +114,15 @@ public class WoocommerceRepository {
         return mRatedProducts;
     }
 
+    public List<CategoryBody> getCategoriesList() {
+        return mCategoriesItems;
+    }
+
     public List<WoocommerceBody> getSearchedProductList() {
         return mSearchedProducts;
     }
 
     public List<WoocommerceBody> getRelatedProductList() {
         return mRelatedProducts;
-    }
-
-    public List<CategoryBody> getCategoriesList() {
-        return mCategoriesItems;
     }
 }

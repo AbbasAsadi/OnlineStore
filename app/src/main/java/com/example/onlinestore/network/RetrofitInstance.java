@@ -29,9 +29,11 @@ public class RetrofitInstance {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
+
     }
 
     public Retrofit getRetrofit() {
         return mRetrofit;
     }
+
 }

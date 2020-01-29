@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#eee"
     android:layoutDirection="rtl"
-    tools:context=".MainFragment">
+    tools:context=".controller.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,9 +26,10 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryRecyclerView"
+            android:id="@+id/category_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/slider_main_fragment" />
@@ -41,7 +42,7 @@
             android:layout_marginRight="8dp"
             android:src="@drawable/typeface_specialoffer"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@id/category_recyclerview" />
 
         <LinearLayout
             android:id="@+id/timer"
@@ -104,10 +105,11 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/wondersRecyclerView"
+            android:id="@+id/amzing_recycleview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layoutDirection="ltr"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spes" />
@@ -121,7 +123,7 @@
             android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wondersRecyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/amzing_recycleview" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card2"
@@ -330,10 +332,11 @@
             app:layout_constraintTop_toBottomOf="@id/img8" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/BestSellingProducts"
+            android:id="@+id/popular_products_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layoutDirection="rtl"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recentImage" />
@@ -350,7 +353,7 @@
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/BestSellingProducts" />
+            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview" />
 
         <TextView
             android:id="@+id/fullListNewProduct"
@@ -363,14 +366,15 @@
             android:textColor="#0a7ab4"
             android:textSize="12.5dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/BestSellingProducts" />
+            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/NewProducts"
+            android:id="@+id/newest_products_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp"
+            android:layoutDirection="rtl"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleProductNew" />

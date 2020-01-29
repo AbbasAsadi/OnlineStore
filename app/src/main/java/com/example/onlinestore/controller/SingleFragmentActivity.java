@@ -1,4 +1,4 @@
-package com.example.onlinestore;
+package com.example.onlinestore.controller;
 
 import android.os.Bundle;
 

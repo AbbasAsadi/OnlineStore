@@ -1,4 +1,4 @@
-package com.example.onlinestore;
+package com.example.onlinestore.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.onlinestore.R;
 import com.example.onlinestore.network.WoocommerceRepository;
 
 import java.io.IOException;

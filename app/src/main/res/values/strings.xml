@@ -3,4 +3,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="price_sample">260000 تومان</string>
+    <string name="most_visiting">پربازدیدترین‌ها</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.onlinestore;
+package com.example.onlinestore.controller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.onlinestore.R;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -27,7 +28,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     }
     @Override
     public Fragment getFragment() {
-        return MainFragment.newInstance();
+        return MainFragment.newInstance(this);
     }
 
     @Override

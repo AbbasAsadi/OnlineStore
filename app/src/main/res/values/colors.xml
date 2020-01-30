@@ -9,5 +9,8 @@
     <color name="priceColor">#66BB6A</color>
     <color name="titleProduct">#535353</color>
     <color name="white">#ffffff</color>
+    <color name="cardViewBackground">#FAFAFA</color>
+    <color name="productBackGroundColor">#EEEEEE</color>
+    <color name="categoryProductColor">#20A6FF</color>
 
 </resources>

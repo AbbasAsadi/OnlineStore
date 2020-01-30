@@ -16,8 +16,8 @@ import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.CategoryAdapter;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
 import com.example.onlinestore.network.WoocommerceRepository;
-import com.example.onlinestore.utils.utils.sliderr.MainSliderAdapter;
-import com.example.onlinestore.utils.utils.sliderr.PicassoImageLoadingService;
+import com.example.onlinestore.utils.sliderr.MainSliderAdapter;
+import com.example.onlinestore.utils.sliderr.PicassoImageLoadingService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,7 @@ public class MainFragment extends Fragment {
     RecyclerView mRecyclerViewNewestProduct;
     @BindView(R.id.popular_products_recyclerview)
     RecyclerView mRecyclerViewPopularProduct;
-//    @BindView(R.id.)
+    //    @BindView(R.id.)
 //    private RecyclerView mRecyclerViewTopRatedProduct;
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
     private ProductAdapterHorizontal mProductAdapterNewestProduct;
@@ -50,9 +50,11 @@ public class MainFragment extends Fragment {
     public MainFragment() {
         // Required empty public constructor
     }
-private MainFragment(Context context) {
+
+    private MainFragment(Context context) {
         mContext = context;
-}
+    }
+
     public static MainFragment newInstance(Context context) {
 
         Bundle args = new Bundle();
@@ -74,38 +76,54 @@ private MainFragment(Context context) {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this , view);
+        ButterKnife.bind(this, view);
 
         mSlider.setAdapter(new MainSliderAdapter());
 
-        mCategoryAdapter = new CategoryAdapter(mRepository.getCategoriesList() , mContext);
+        updateAdapter();
         mRecyclerViewCategory.setLayoutManager
-                (new LinearLayoutManager(mContext , RecyclerView.HORIZONTAL , false));
+                (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
         mRecyclerViewCategory
                 .setAdapter(mCategoryAdapter);
 
         mProductAdapterAmazingSuggest = new ProductAdapterHorizontal
-                (mRepository.getRatedProductList() , mContext );
+                (mRepository.getRatedProductList(), mContext);
         mRecyclerViewAmazingSuggest.setLayoutManager(new LinearLayoutManager
-                (mContext , RecyclerView.HORIZONTAL , true));
+                (mContext, RecyclerView.HORIZONTAL, true));
         mRecyclerViewAmazingSuggest
                 .setAdapter(mProductAdapterAmazingSuggest);
 
         mProductAdapterNewestProduct = new ProductAdapterHorizontal
-                (mRepository.getNewestProductList() , mContext);
+                (mRepository.getNewestProductList(), mContext);
         mRecyclerViewNewestProduct.setLayoutManager
-                (new LinearLayoutManager(mContext , RecyclerView.HORIZONTAL , false));
+                (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
         mRecyclerViewNewestProduct
                 .setAdapter(mProductAdapterNewestProduct);
 
         mProductAdapterPopularProduct = new ProductAdapterHorizontal(
-                mRepository.getPopularProductList() , mContext);
+                mRepository.getPopularProductList(), mContext);
         mRecyclerViewPopularProduct.setLayoutManager
-                (new LinearLayoutManager(mContext , RecyclerView.HORIZONTAL , false));
+                (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
         mRecyclerViewPopularProduct
                 .setAdapter(mProductAdapterPopularProduct);
 
         return view;
+    }
+
+    private void updateAdapter() {
+        if (mCategoryAdapter == null) {
+            mCategoryAdapter = new CategoryAdapter(mRepository.getCategoriesList(), mContext);
+
+        }else {
+            mCategoryAdapter.setCategoryList(mRepository.getCategoriesList());
+            mCategoryAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateAdapter();
     }
 
     @Override

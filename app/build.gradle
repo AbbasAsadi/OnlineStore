@@ -43,10 +43,14 @@ dependencies {
 
     //for sliderLayout
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation'com.ss.bannerslider:bannerslider:2.0.0'
+    implementation 'com.ss.bannerslider:bannerslider:2.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     //for butterKnife
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    //for detail slider
+    implementation 'com.github.smarteist:autoimageslider:1.3.2'
+
 }

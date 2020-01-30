@@ -1,7 +1,8 @@
-package com.example.onlinestore.utils.utils.sliderr;
+package com.example.onlinestore.utils.sliderr;
 
 import android.widget.ImageView;
 
+import com.example.onlinestore.R;
 import com.squareup.picasso.Picasso;
 
 import ss.com.bannerslider.ImageLoadingService;

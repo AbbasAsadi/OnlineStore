@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.App;
 import com.example.onlinestore.R;
-import com.example.onlinestore.model.WoocommerceBody;
+import com.example.onlinestore.model.products.ProductBody;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,23 +25,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
-    private List<WoocommerceBody> mListProduct;
+    private List<ProductBody> mListProduct;
     private Context mContext;
 
-    public ProductAdapter(List<WoocommerceBody> listProduct, Context context) {
+    public ProductAdapter(List<ProductBody> listProduct, Context context) {
         mListProduct = listProduct;
         mContext = context;
     }
 
-    public List<WoocommerceBody> getListProduct() {
+    public List<ProductBody> getListProduct() {
         return mListProduct;
     }
 
-    public void setListProduct(List<WoocommerceBody> listProduct) {
+    public void setListProduct(List<ProductBody> listProduct) {
         mListProduct = new ArrayList<>();
         mListProduct = listProduct;
     }
-    public void addToProductList(List<WoocommerceBody> productList ) {
+    public void addToProductList(List<ProductBody> productList ) {
         this.mListProduct.addAll(productList);
     }
     @NonNull

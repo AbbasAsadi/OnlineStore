@@ -1,4 +1,4 @@
-package com.example.onlinestore.utils.utils.sliderr;
+package com.example.onlinestore.utils.sliderr;
 
 import android.widget.ImageView;
 

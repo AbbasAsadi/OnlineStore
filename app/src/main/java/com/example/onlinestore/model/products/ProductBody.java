@@ -1,9 +1,9 @@
-package com.example.onlinestore.model;
+package com.example.onlinestore.model.products;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class WoocommerceBody {
+public class ProductBody {
 
 	@SerializedName("upsell_ids")
 	private List<Object> upsellIds;
@@ -734,7 +734,7 @@ public class WoocommerceBody {
 	@Override
  	public String toString(){
 		return 
-			"WoocommerceBody{" +
+			"ProductBody{" +
 			"upsell_ids = '" + upsellIds + '\'' + 
 			",featured = '" + featured + '\'' + 
 			",purchasable = '" + purchasable + '\'' + 

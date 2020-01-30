@@ -1,4 +1,4 @@
-package com.example.onlinestore.model;
+package com.example.onlinestore.model.products;
 
 import com.google.gson.annotations.SerializedName;
 

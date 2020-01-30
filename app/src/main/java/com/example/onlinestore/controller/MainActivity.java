@@ -23,8 +23,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     private NavigationView navigationView;
 
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
+        return new Intent(context, MainActivity.class);
     }
     @Override
     public Fragment getFragment() {
@@ -38,7 +37,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
     @Override
     public int getResourceId() {
-        return R.id.container;
+        return R.id.main_activity;
     }
 
     @Override

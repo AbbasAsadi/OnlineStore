@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.App;
 import com.example.onlinestore.R;
-import com.example.onlinestore.model.WoocommerceBody;
+import com.example.onlinestore.controller.DetailProductActivity;
+import com.example.onlinestore.model.products.ProductBody;
+import com.example.onlinestore.network.WoocommerceRepository;
 import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
@@ -22,19 +24,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProductAdapterHorizontal extends RecyclerView.Adapter <ProductAdapterHorizontal.HorizontalProductViewHolder> {
-    private List<WoocommerceBody> mListProduct;
+    private List<ProductBody> mListProduct;
     private Context mContext;
 
-    public ProductAdapterHorizontal(List<WoocommerceBody> listProduct, Context context) {
+    public ProductAdapterHorizontal(List<ProductBody> listProduct, Context context) {
         mListProduct = listProduct;
         mContext = context;
     }
 
-    public List<WoocommerceBody> getListProduct() {
+    public List<ProductBody> getListProduct() {
         return mListProduct;
     }
 
-    public void setListProduct(List<WoocommerceBody> listProduct) {
+    public void setListProduct(List<ProductBody> listProduct) {
         mListProduct = listProduct;
     }
 
@@ -70,8 +72,12 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter <ProductAdapt
                 + " تومان";
         holder.salePrice.setText(price);
 
-        /*holder.horizontalCardView.setOnClickListener(view ->
-                EventBus.getDefault()
+        holder.horizontalCardView.setOnClickListener(view -> {
+            ProductBody productBody = mListProduct.get(position);
+            WoocommerceRepository.getInstance().setClickedProductId(productBody.getId());
+            mContext.startActivity(DetailProductActivity.newIntent(mContext));
+        });
+                /*EventBus.getDefault()
                         .post(new OnProductClickedMessage(mListProduct.get(position).getId())));*/
     }
 

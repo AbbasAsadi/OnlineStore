@@ -17,7 +17,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         setContentView(getContentView());
 
         getSupportFragmentManager().beginTransaction()
-                .replace(getResourceId() , getFragment())
+                .add(getResourceId() , getFragment())
+                .addToBackStack("")
                 .commit();
     }
 }

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -91,6 +92,7 @@ public class DetailProductFragment extends Fragment {
     private ProductCategoryAdapter mCategoryAdapter;
     private List<ProductBody> mRelatedProduct;
     private ProductAdapterHorizontal mRelatedProductAdapter;
+
     public DetailProductFragment() {
         // Required empty public constructor
     }
@@ -120,6 +122,7 @@ public class DetailProductFragment extends Fragment {
         for (int id : mProduct.getRelatedIds()) {
             mRelatedProduct.add(mRepository.getProductById(id));
         }
+        Toast.makeText(getActivity(), "id:" + mProduct.getId(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -138,10 +141,13 @@ public class DetailProductFragment extends Fragment {
         regularPrice.setText(mProduct.getRegularPrice());
         salePrice.setText(mProduct.getSalePrice());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            if (shortDescriptionProduct != null) {
+                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            }
             descriptionProduct.setText(Html.fromHtml(mProduct.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         } else {
-            shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription()));
+            if (shortDescriptionProduct != null)
+                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription()));
             descriptionProduct.setText(Html.fromHtml(mProduct.getDescription()));
         }
 
@@ -158,14 +164,23 @@ public class DetailProductFragment extends Fragment {
         updateRelatedProductAdapter();
         relatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
 
+        userComments.setOnClickListener(view1 -> {
+            getActivity().setContentView(R.layout.activity_detail_product);
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_product_Activity , CommentFragment.newInstance())
+                    .addToBackStack("comment")
+                    .commit();
+
+        });
 
         return view;
     }
 
     private void updateRelatedProductAdapter() {
         if (mRelatedProductAdapter == null) {
-            mRelatedProductAdapter = new ProductAdapterHorizontal(mRelatedProduct , getActivity());
-        }else {
+            mRelatedProductAdapter = new ProductAdapterHorizontal(mRelatedProduct, getActivity());
+        } else {
             mRelatedProductAdapter.setListProduct(mRelatedProduct);
             mRelatedProductAdapter.notifyDataSetChanged();
         }

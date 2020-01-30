@@ -4,6 +4,7 @@ package com.example.onlinestore.network;
 import android.util.Log;
 
 import com.example.onlinestore.model.categories.CategoryBody;
+import com.example.onlinestore.model.comment.CommentBody;
 import com.example.onlinestore.model.products.ProductBody;
 import com.example.onlinestore.network.interfaces.WoocommerceService;
 
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WoocommerceRepository {
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
@@ -28,6 +31,7 @@ public class WoocommerceRepository {
     private List<ProductBody> mSearchedProducts;
     private List<ProductBody> mRelatedProducts;
     private List<CategoryBody> mCategoriesItems;
+    private List<CommentBody> mCommentList;
     private int mClickedProductId;
     private Map<String, String> mQueries = new HashMap<String, String>() {
         {
@@ -106,6 +110,25 @@ public class WoocommerceRepository {
         }
     }
 
+    public List<CommentBody> getCommentList() {
+        return mCommentList;
+    }
+
+    public void setCommentList(int id) {
+        Call<List<CommentBody>> call = mWoocommerceService
+                .getProductReviews(id, CONSUMER_KEY, CONSUMER_SECRET , "date");
+        call.enqueue(new Callback<List<CommentBody>>() {
+            @Override
+            public void onResponse(Call<List<CommentBody>> call, Response<List<CommentBody>> response) {
+                mCommentList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<CommentBody>> call, Throwable t) {
+
+            }
+        });
+    }
 
     public int getClickedProductId() {
         return mClickedProductId;

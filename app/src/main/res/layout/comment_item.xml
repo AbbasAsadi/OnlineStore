@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="2dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="150dp">
+
+        <RelativeLayout
+            android:id="@+id/title_comment_relative"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/productBackGroundColor">
+
+            <ImageView
+                android:id="@+id/comment_img"
+                app:srcCompat="@drawable/ic_mode_comment_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="4dp" />
+
+            <TextView
+                android:id="@+id/name_reviewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/comment_img"
+                android:text="@string/app_name"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_toStartOf="@id/comment_img"
+                android:gravity="bottom"
+                android:text="@string/app_name"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/edit_comment"
+                app:srcCompat="@drawable/ic_add_comment_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/rating_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/edit_comment"
+                android:text="@string/register_digikala" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_comment_relative">
+
+            <TextView
+                android:id="@+id/review_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="16dp"
+                android:text="@string/app_name"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/delete_comment"
+                app:srcCompat="@drawable/ic_delete_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/review_txt"
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

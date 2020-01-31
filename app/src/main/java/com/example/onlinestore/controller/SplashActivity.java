@@ -35,7 +35,8 @@ public class SplashActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 Repository.setAllProducts();
-                Repository.setRatedProducts();
+                Repository.setAmazingProducts();
+                Repository.setTopRatedProducts();
                 Repository.setPopularProducts();
                 Repository.setRecentProducts();
                 Repository.setCategoriesList();

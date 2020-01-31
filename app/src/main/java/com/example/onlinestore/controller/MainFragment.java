@@ -43,6 +43,7 @@ public class MainFragment extends Fragment {
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
     private ProductAdapterHorizontal mProductAdapterNewestProduct;
     private ProductAdapterHorizontal mProductAdapterPopularProduct;
+
     private CategoryAdapter mCategoryAdapter;
     private WoocommerceRepository mRepository;
     private Context mContext;
@@ -80,50 +81,80 @@ public class MainFragment extends Fragment {
 
         mSlider.setAdapter(new MainSliderAdapter());
 
-        updateAdapter();
+        updateCategoryAdapter();
         mRecyclerViewCategory.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-        mRecyclerViewCategory
-                .setAdapter(mCategoryAdapter);
 
-        mProductAdapterAmazingSuggest = new ProductAdapterHorizontal
-                (mRepository.getRatedProductList(), mContext);
+        updateAmazingProductAdapter();
         mRecyclerViewAmazingSuggest.setLayoutManager(new LinearLayoutManager
                 (mContext, RecyclerView.HORIZONTAL, true));
-        mRecyclerViewAmazingSuggest
-                .setAdapter(mProductAdapterAmazingSuggest);
 
-        mProductAdapterNewestProduct = new ProductAdapterHorizontal
-                (mRepository.getNewestProductList(), mContext);
+
+        updateNewestProductAdapter();
         mRecyclerViewNewestProduct.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-        mRecyclerViewNewestProduct
-                .setAdapter(mProductAdapterNewestProduct);
 
-        mProductAdapterPopularProduct = new ProductAdapterHorizontal(
-                mRepository.getPopularProductList(), mContext);
+        updatePopularProductAdapter();
         mRecyclerViewPopularProduct.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
-        mRecyclerViewPopularProduct
-                .setAdapter(mProductAdapterPopularProduct);
 
         return view;
     }
 
-    private void updateAdapter() {
+    private void updatePopularProductAdapter() {
+        if (mProductAdapterPopularProduct == null) {
+            mProductAdapterPopularProduct = new ProductAdapterHorizontal(
+                    mRepository.getTopRatedProductList(), mContext);
+        }else {
+            mProductAdapterPopularProduct.setListProduct(mRepository.getTopRatedProductList());
+            mProductAdapterPopularProduct.notifyDataSetChanged();
+        }
+        mRecyclerViewPopularProduct
+                .setAdapter(mProductAdapterPopularProduct);
+    }
+
+    private void updateNewestProductAdapter() {
+        if (mProductAdapterNewestProduct == null) {
+            mProductAdapterNewestProduct = new ProductAdapterHorizontal
+                    (mRepository.getNewestProductList(), mContext);
+        }else {
+            mProductAdapterNewestProduct.setListProduct(mRepository.getNewestProductList());
+            mProductAdapterNewestProduct.notifyDataSetChanged();
+        }
+        mRecyclerViewNewestProduct
+                .setAdapter(mProductAdapterNewestProduct);
+    }
+
+    private void updateAmazingProductAdapter() {
+        if (mProductAdapterAmazingSuggest == null)
+            mProductAdapterAmazingSuggest = new ProductAdapterHorizontal
+                    (mRepository.getAmazingProducts(), mContext);
+        else {
+            mProductAdapterAmazingSuggest.setListProduct(mRepository.getAmazingProducts());
+            mProductAdapterAmazingSuggest.notifyDataSetChanged();
+        }
+        mRecyclerViewAmazingSuggest
+                .setAdapter(mProductAdapterAmazingSuggest);
+    }
+
+    private void updateCategoryAdapter() {
         if (mCategoryAdapter == null) {
             mCategoryAdapter = new CategoryAdapter(mRepository.getCategoriesList(), mContext);
 
-        }else {
+        } else {
             mCategoryAdapter.setCategoryList(mRepository.getCategoriesList());
             mCategoryAdapter.notifyDataSetChanged();
         }
+        mRecyclerViewCategory.setAdapter(mCategoryAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateAdapter();
+        updateCategoryAdapter();
+        updateAmazingProductAdapter();
+        updateNewestProductAdapter();
+        updatePopularProductAdapter();
     }
 
     @Override

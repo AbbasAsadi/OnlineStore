@@ -10,8 +10,4 @@
         android:id="@+id/shopping_bag_menuitem"
         android:icon="@drawable/ic_shopping_24dp_white"
         app:showAsAction="always"/>
-    <item android:title="personal area"
-        android:id="@+id/personal_area_menuitem"
-        android:icon="@drawable/ic_person_24dp"
-        app:showAsAction="always"/>
 </menu>

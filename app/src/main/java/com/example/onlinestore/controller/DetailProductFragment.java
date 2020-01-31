@@ -165,11 +165,11 @@ public class DetailProductFragment extends Fragment {
         relatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
 
         userComments.setOnClickListener(view1 -> {
-            getActivity().setContentView(R.layout.activity_detail_product);
+            //getActivity().setContentView(R.layout.activity_detail_product);
 
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_product_Activity , CommentFragment.newInstance())
-                    .addToBackStack("comment")
+                    .replace(R.id.detail_product_Activity , CommentFragment.newInstance())
+                    .addToBackStack(null)
                     .commit();
 
         });

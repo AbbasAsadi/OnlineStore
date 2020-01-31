@@ -22,12 +22,14 @@ public class WoocommerceRepository {
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
     public static final String CONSUMER_KEY = "ck_552ea09e65326775023b1e8969bee5ab65a3be38";
     public static final String CONSUMER_SECRET = "cs_9d3a817430202486c59662290989d5b4c5c3c837";
+    public static final int AMAZING_PRODUCT_TAG = 48;
     private static WoocommerceRepository sWoocommerceRepository;
     private final String TAG = "WoocommerceRepository";
     private List<ProductBody> mAllProducts;
+    private List<ProductBody> mAmazingProducts;
     private List<ProductBody> mRecentProducts;
     private List<ProductBody> mPopularProducts;
-    private List<ProductBody> mRatedProducts;
+    private List<ProductBody> mTopRatedProducts;
     private List<ProductBody> mSearchedProducts;
     private List<ProductBody> mRelatedProducts;
     private List<CategoryBody> mCategoriesItems;
@@ -60,6 +62,13 @@ public class WoocommerceRepository {
         mAllProducts = call.execute().body();
     }
 
+    public void setAmazingProducts() throws IOException {
+        Call<List<ProductBody>> call = mWoocommerceService
+                .getAmazingSuggestion(CONSUMER_KEY , CONSUMER_SECRET, AMAZING_PRODUCT_TAG);
+        mAmazingProducts = new ArrayList<>();
+        mAmazingProducts = call.execute().body();
+    }
+
     public void setRecentProducts() throws IOException {
         Call<List<ProductBody>> call = mWoocommerceService
                 .getProductByOrder(CONSUMER_KEY, CONSUMER_SECRET, 10, "date");
@@ -85,15 +94,15 @@ public class WoocommerceRepository {
 
     }
 
-    public void setRatedProducts() throws IOException {
+    public void setTopRatedProducts() throws IOException {
         Call<List<ProductBody>> call = mWoocommerceService
                 .getProductByOrder(CONSUMER_KEY, CONSUMER_SECRET, 10, "rating");
-        mRatedProducts = new ArrayList<>();
-        mRatedProducts = call.execute().body();
-        if (mRatedProducts == null) {
-            Log.d(TAG, "setCategoriesList: list is null");
+        mTopRatedProducts = new ArrayList<>();
+        mTopRatedProducts = call.execute().body();
+        if (mTopRatedProducts == null) {
+            Log.d(TAG, "setBestSellingList: list is null");
         } else {
-            Log.d(TAG, "setRatedProductsSize: " + mRatedProducts.size());
+            Log.d(TAG, "setRatedProductsSize: " + mTopRatedProducts.size());
         }
     }
 
@@ -130,6 +139,10 @@ public class WoocommerceRepository {
         });
     }
 
+    public List<ProductBody> getAmazingProducts() {
+        return mAmazingProducts;
+    }
+
     public int getClickedProductId() {
         return mClickedProductId;
     }
@@ -146,8 +159,8 @@ public class WoocommerceRepository {
         return mPopularProducts;
     }
 
-    public List<ProductBody> getRatedProductList() {
-        return mRatedProducts;
+    public List<ProductBody> getTopRatedProductList() {
+        return mTopRatedProducts;
     }
 
     public List<CategoryBody> getCategoriesList() {

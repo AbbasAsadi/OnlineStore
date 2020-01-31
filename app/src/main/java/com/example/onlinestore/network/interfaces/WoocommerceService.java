@@ -15,7 +15,10 @@ public interface WoocommerceService {
     Call<List<ProductBody>> getAllProduct(@Query("consumer_key") String consumerKey,
                                           @Query("consumer_secret") String consumerSecret,
                                           @Query("per_page") int perPage);
-
+    @GET("products")
+    Call<List<ProductBody>> getAmazingSuggestion(@Query("consumer_key") String consumerKey,
+                                                 @Query("consumer_secret")String consumerSecret,
+                                                 @Query("tag") int tagId);
     @GET("products")
     Call<List<ProductBody>> getProductByOrder(@Query("consumer_key") String consumerKey,
                                               @Query("consumer_secret") String consumerSecret,

@@ -82,18 +82,29 @@ public class CommentFragment extends Fragment {
             parentRelative.setVisibility(View.VISIBLE);
         }
 
-        if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(mRepository.getCommentList());
-        }else {
-            mCommentAdapter.setCommentList(mRepository.getCommentList());
-            mCommentAdapter.notifyDataSetChanged();
-        }
+        updateCommentAdapter();
+        progressBar.setVisibility(View.GONE);
         commentRecyclerView.setAdapter(mCommentAdapter);
         commentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , true));
 
         return view;
     }
 
+    private void updateCommentAdapter() {
+        if (mCommentAdapter == null) {
+            mCommentAdapter = new CommentAdapter(mRepository.getCommentList());
+        }else {
+            mCommentAdapter.setCommentList(mRepository.getCommentList());
+            mCommentAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCommentAdapter();
+    }
 
     public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
         private List<CommentBody> mCommentList;

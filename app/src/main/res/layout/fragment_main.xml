@@ -311,7 +311,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             android:fontFamily="@font/iran_sans"
-            android:text="محصولات پربیننده"
+            android:text="محبوبترین محصولات"
             android:textColor="#636e80"
             android:textSize="14dp"
             android:textStyle="bold"

@@ -18,5 +18,6 @@
     <string name="no_comment">نظری برای محصول موردنظر یافت نشد</string>
     <string name="comment_users">نظرات کاربران</string>
     <string name="register_digikala">ثبت نام در دیجی کالا</string>
+    <string name="login_or_register_header">ورود یا ثبت نام</string>
 
 </resources>

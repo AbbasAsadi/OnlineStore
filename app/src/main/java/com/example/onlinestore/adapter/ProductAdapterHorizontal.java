@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.App;
 import com.example.onlinestore.R;
-import com.example.onlinestore.controller.DetailProductActivity;
+import com.example.onlinestore.controller.Activity.DetailProductActivity;
 import com.example.onlinestore.model.products.ProductBody;
 import com.example.onlinestore.network.WoocommerceRepository;
 import com.google.android.material.card.MaterialCardView;

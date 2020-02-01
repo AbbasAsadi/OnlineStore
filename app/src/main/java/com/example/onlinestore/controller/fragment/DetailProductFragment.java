@@ -1,4 +1,4 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.fragment;
 
 
 import android.os.Build;
@@ -165,8 +165,6 @@ public class DetailProductFragment extends Fragment {
         relatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
 
         userComments.setOnClickListener(view1 -> {
-            //getActivity().setContentView(R.layout.activity_detail_product);
-
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_product_Activity , CommentFragment.newInstance())
                     .addToBackStack(null)

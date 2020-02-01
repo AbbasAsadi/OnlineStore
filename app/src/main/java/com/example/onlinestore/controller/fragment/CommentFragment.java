@@ -1,7 +1,6 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.fragment;
 
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -24,7 +23,6 @@ import com.example.onlinestore.model.comment.CommentBody;
 import com.example.onlinestore.network.WoocommerceRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;

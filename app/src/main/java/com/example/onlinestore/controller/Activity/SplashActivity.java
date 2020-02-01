@@ -1,4 +1,4 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import com.example.onlinestore.network.WoocommerceRepository;
 import java.io.IOException;
 
 public class SplashActivity extends AppCompatActivity {
+
 
 
     public static Intent newIntent(Context context) {

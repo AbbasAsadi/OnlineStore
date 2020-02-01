@@ -1,4 +1,4 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.fragment;
 
 
 import android.content.Context;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
-import com.example.onlinestore.adapter.CategoryAdapter;
+import com.example.onlinestore.adapter.CategoryHorizontalAdapter;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
 import com.example.onlinestore.network.WoocommerceRepository;
 import com.example.onlinestore.utils.sliderr.MainSliderAdapter;
@@ -43,8 +43,7 @@ public class MainFragment extends Fragment {
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
     private ProductAdapterHorizontal mProductAdapterNewestProduct;
     private ProductAdapterHorizontal mProductAdapterPopularProduct;
-
-    private CategoryAdapter mCategoryAdapter;
+    private CategoryHorizontalAdapter mCategoryAdapter;
     private WoocommerceRepository mRepository;
     private Context mContext;
 
@@ -139,10 +138,10 @@ public class MainFragment extends Fragment {
 
     private void updateCategoryAdapter() {
         if (mCategoryAdapter == null) {
-            mCategoryAdapter = new CategoryAdapter(mRepository.getCategoriesList(), mContext);
+            mCategoryAdapter = new CategoryHorizontalAdapter(mRepository.getFilteredCategoryList(0), mContext);
 
         } else {
-            mCategoryAdapter.setCategoryList(mRepository.getCategoriesList());
+            mCategoryAdapter.setCategoryList(mRepository.getFilteredCategoryList(0));
             mCategoryAdapter.notifyDataSetChanged();
         }
         mRecyclerViewCategory.setAdapter(mCategoryAdapter);

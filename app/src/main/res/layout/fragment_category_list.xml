@@ -4,33 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".controller.fragment.CommentFragment">
+    tools:context=".controller.fragment.CategoryListFragment">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/empty_comment"
-        android:textStyle="bold"
-        android:textColor="@color/relateProductTitle"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"
-        android:text="@string/no_comment"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"
+        tools:targetApi="lollipop">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -57,7 +41,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:text="@string/comment_users"
+                android:text="@string/product_category"
                 android:layout_toStartOf="@+id/back_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -66,26 +50,24 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_below="@id/toolbar"
-        android:id="@+id/parent_relative"
+    <com.google.android.material.tabs.TabLayout
+        app:tabMode="scrollable"
+        android:layoutDirection="rtl"
+        android:elevation="4dp"
+        app:tabIndicatorColor="@color/white"
+        app:tabTextColor="@color/white"
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@color/colorPrimary"
+        tools:targetApi="lollipop" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comments_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        app:srcCompat="@drawable/ic_add_comment_gray"
-        app:backgroundTint="@color/colorPrimary"
-        android:layout_margin="16dp"
-        android:id="@+id/add_comment_fab"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:layoutDirection="rtl"
+        android:id="@+id/viewPager"
+        android:layout_below="@id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

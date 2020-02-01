@@ -19,5 +19,6 @@
     <string name="comment_users">نظرات کاربران</string>
     <string name="register_digikala">ثبت نام در دیجی کالا</string>
     <string name="login_or_register_header">ورود یا ثبت نام</string>
+    <string name="product_category">دسته بندی محصولات</string>
 
 </resources>

@@ -1,14 +1,13 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.Activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.fragment.DetailProductFragment;
+import com.example.onlinestore.controller.SingleFragmentActivity;
 
 public class DetailProductActivity extends SingleFragmentActivity {
 

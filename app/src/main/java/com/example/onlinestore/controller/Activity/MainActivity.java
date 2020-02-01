@@ -1,4 +1,4 @@
-package com.example.onlinestore.controller;
+package com.example.onlinestore.controller.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.fragment.MainFragment;
+import com.example.onlinestore.controller.SingleFragmentActivity;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -73,16 +75,18 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         // Handle Navigation Item Click
         int id = item.getItemId();
 
-        /*switch (id) {
+        switch (id) {
             case R.id.activity_main_drawer_home:
+                //do nothing
                 break;
-            case R.id.activity_main_drawer_profile:
+            case R.id.activity_main_drawer_category:
+                startActivity(CategoryListActivity.newIntent(this));
                 break;
             case R.id.activity_main_drawer_settings:
                 break;
             default:
                 break;
-        }*/
+        }
 
         this.drawerLayout.closeDrawer(GravityCompat.START);
 

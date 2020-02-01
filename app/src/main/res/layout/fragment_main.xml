@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#eee"
     android:layoutDirection="rtl"
-    tools:context=".controller.MainFragment">
+    tools:context=".controller.fragment.MainFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:slider_interval="5000"
+            app:slider_interval="10000"
             app:slider_loopSlides="true" />
 
 

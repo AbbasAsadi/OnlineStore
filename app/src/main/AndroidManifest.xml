@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.DetailProductActivity"></activity>
-        <activity android:name=".controller.SplashActivity">
+        <activity android:name=".controller.Activity.CategoryListActivity"></activity>
+        <activity android:name=".controller.Activity.DetailProductActivity" />
+        <activity android:name=".controller.Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.MainActivity"></activity>
+        <activity android:name=".controller.Activity.MainActivity" />
     </application>
 
 </manifest>

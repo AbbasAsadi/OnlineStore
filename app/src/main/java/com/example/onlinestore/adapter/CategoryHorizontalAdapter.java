@@ -18,12 +18,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
-    public CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface;
+public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHorizontalAdapter.CategoryHolder> {
     private List<CategoryBody> mCategoryList;
     private Context mContext;
 
-    public CategoryAdapter(List<CategoryBody> categoryList, Context context) {
+    public CategoryHorizontalAdapter(List<CategoryBody> categoryList, Context context) {
         mCategoryList = categoryList;
         mContext = context;
     }
@@ -48,7 +47,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.titleCategory.setText(mCategoryList.get(position).getName());
         holder.parentCardView.setOnClickListener(view -> {
 
-            categoryRecyclerViewAdapterInterface.onCategoryClicked(position, mCategoryList.get(position));
 
         });
     }
@@ -56,15 +54,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public int getItemCount() {
         return mCategoryList.size();
-    }
-
-    public void setCategoryRecyclerViewAdapterInterface(
-            CategoryRecyclerViewAdapterInterface categoryRecyclerViewAdapterInterface) {
-        this.categoryRecyclerViewAdapterInterface = categoryRecyclerViewAdapterInterface;
-    }
-
-    public interface CategoryRecyclerViewAdapterInterface {
-        void onCategoryClicked(int position, CategoryBody categoryBody);
     }
 
     public class CategoryHolder extends RecyclerView.ViewHolder {

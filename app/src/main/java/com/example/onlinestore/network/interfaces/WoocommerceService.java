@@ -26,9 +26,9 @@ public interface WoocommerceService {
                                               @Query("orderby") String orderBy);
 
     @GET("products/categories")
-    Call<List<CategoryBody>> getAllCategories(@Query("consumer_key") String consumerKey,
-                                              @Query("consumer_secret") String consumerSecret,
-                                              @Query("per_page") int perPage);
+    Call<List<CategoryBody>> getCategories(@Query("consumer_key") String consumerKey,
+                                           @Query("consumer_secret") String consumerSecret,
+                                           @Query("per_page")int perPage);
 
     @GET("products/reviews")
     Call<List<CommentBody>> getProductReviews(@Query("product") int productId,

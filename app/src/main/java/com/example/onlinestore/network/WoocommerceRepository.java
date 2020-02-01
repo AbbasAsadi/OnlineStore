@@ -32,7 +32,7 @@ public class WoocommerceRepository {
     private List<ProductBody> mTopRatedProducts;
     private List<ProductBody> mSearchedProducts;
     private List<ProductBody> mRelatedProducts;
-    private List<CategoryBody> mCategoriesItems;
+    private List<CategoryBody> mCategoriesList;
     private List<CommentBody> mCommentList;
     private int mClickedProductId;
     private Map<String, String> mQueries = new HashMap<String, String>() {
@@ -109,16 +109,27 @@ public class WoocommerceRepository {
 
     public void setCategoriesList() throws IOException {
         Call<List<CategoryBody>> call = mWoocommerceService
-                .getAllCategories(CONSUMER_KEY, CONSUMER_SECRET, 50);
-        mCategoriesItems = new ArrayList<>();
-        mCategoriesItems = call.execute().body();
-        if (mCategoriesItems == null) {
+                .getCategories(CONSUMER_KEY, CONSUMER_SECRET , 40);
+        //mCategoriesList = new ArrayList<>();
+        mCategoriesList = call.execute().body();
+
+        if (mCategoriesList == null) {
             Log.d(TAG, "setCategoriesList: list is null");
         } else {
-            Log.d(TAG, "setCategoriesListSize: " + mCategoriesItems.size());
+            Log.d(TAG, "setCategoriesListSize: " + mCategoriesList.size());
         }
     }
 
+
+    public List<CategoryBody> getFilteredCategoryList(int parent) {
+        List<CategoryBody> subCategoryList = new ArrayList<>();
+        for (CategoryBody category: mCategoriesList) {
+            if (category.getParent() == parent){
+                subCategoryList.add(category);
+            }
+        }
+        return subCategoryList;
+    }
     public List<CommentBody> getCommentList() {
         return mCommentList;
     }
@@ -164,7 +175,7 @@ public class WoocommerceRepository {
     }
 
     public List<CategoryBody> getCategoriesList() {
-        return mCategoriesItems;
+        return mCategoriesList;
     }
 
     public List<ProductBody> getSearchedProductList() {

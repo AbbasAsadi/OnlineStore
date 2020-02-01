@@ -19,7 +19,7 @@ public class PicassoImageLoadingService implements ImageLoadingService {
 
     @Override
     public void loadImage(int resource, ImageView imageView) {
-        Picasso.get().load(resource).into(imageView);
+        Picasso.get().load(resource).placeholder(R.drawable.digikala_place_holder).into(imageView);
 
     }
 

@@ -80,7 +80,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                 //do nothing
                 break;
             case R.id.activity_main_drawer_category:
-                startActivity(CategoryListActivity.newIntent(this));
+                startActivity(CategoryListActivity.newIntent(this , -1));
                 break;
             case R.id.activity_main_drawer_settings:
                 break;

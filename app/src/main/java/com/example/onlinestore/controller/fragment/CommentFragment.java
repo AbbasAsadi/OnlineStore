@@ -1,9 +1,11 @@
 package com.example.onlinestore.controller.fragment;
 
 
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,23 +17,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
 import com.example.onlinestore.model.comment.CommentBody;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CommentFragment extends Fragment {
+    private static final String TAG = "CommentFragment";
+
+    /*@OnClick(R.id.back_toolbar)
+    void onBackClick() {
+
+    }*/
+
     @BindView(R.id.comments_recyclerView)
     RecyclerView commentRecyclerView;
     @BindView(R.id.progress_bar)
@@ -43,27 +58,41 @@ public class CommentFragment extends Fragment {
     @BindView(R.id.add_comment_fab)
     FloatingActionButton addCommentFab;
 
-    private WoocommerceRepository mRepository;
+
     private CommentAdapter mCommentAdapter;
+    private int mProductId;
+    private List<CommentBody> mCommentList;
+    private MutableLiveData<List<CommentBody>> mLiveDataCommentList;
 
     public CommentFragment() {
         // Required empty public constructor
     }
 
-    public static CommentFragment newInstance() {
+    private CommentFragment(int productId) {
+        mProductId = productId;
+    }
+
+    public static CommentFragment newInstance(int productId) {
 
         Bundle args = new Bundle();
 
-        CommentFragment fragment = new CommentFragment();
+        CommentFragment fragment = new CommentFragment(productId);
         fragment.setArguments(args);
         return fragment;
     }
-
+    private MutableLiveData<List<CommentBody>> getLiveCommentList() {
+        if (mLiveDataCommentList == null) {
+            mLiveDataCommentList = new MutableLiveData<>();
+        }
+        return mLiveDataCommentList;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRepository = WoocommerceRepository.getInstance();
-        mRepository.setCommentList(mRepository.getClickedProductId());
+        mCommentList = new ArrayList<>();
+        getLiveCommentList().setValue(mCommentList);
+        LoadCommentAsync async = new LoadCommentAsync();
+        async.execute();
     }
 
     @Override
@@ -72,31 +101,31 @@ public class CommentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
         ButterKnife.bind(this, view);
-        if (mRepository.getCommentList() == null || mRepository.getCommentList().isEmpty()) {
-            emptyComment.setVisibility(View.VISIBLE);
-            parentRelative.setVisibility(View.GONE);
-        } else {
-            emptyComment.setVisibility(View.GONE);
-            parentRelative.setVisibility(View.VISIBLE);
-        }
+        commentRecyclerView.setVisibility(View.GONE);
+        commentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 
+        Observer<List<CommentBody>> observer = commentBodies -> {
+            updateCommentAdapter();
+            Log.d(TAG, "onCreateView : mCommentList.size:" + mCommentList.size());
+            Log.d(TAG, "onCreateView : mCommentList.size:" + getLiveCommentList().getValue().size());
+
+        };
+        Log.d(TAG, "onCreateView : mCommentList.size:" + mCommentList.size());
+        getLiveCommentList().observe(this , observer);
         updateCommentAdapter();
-        progressBar.setVisibility(View.GONE);
-        commentRecyclerView.setAdapter(mCommentAdapter);
-        commentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , true));
 
         return view;
     }
 
-    private void updateCommentAdapter() {
-        if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(mRepository.getCommentList());
-        }else {
-            mCommentAdapter.setCommentList(mRepository.getCommentList());
-            mCommentAdapter.notifyDataSetChanged();
-        }
-    }
-
+   private void updateCommentAdapter() {
+       if (mCommentAdapter == null) {
+           mCommentAdapter = new CommentAdapter(getLiveCommentList().getValue());
+       } else {
+           mCommentAdapter.setCommentList(getLiveCommentList().getValue());
+           mCommentAdapter.notifyDataSetChanged();
+       }
+       commentRecyclerView.setAdapter(mCommentAdapter);
+   }
 
     @Override
     public void onResume() {
@@ -107,7 +136,7 @@ public class CommentFragment extends Fragment {
     public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
         private List<CommentBody> mCommentList;
 
-        public CommentAdapter(List<CommentBody> commentList) {
+        CommentAdapter(List<CommentBody> commentList) {
             mCommentList = commentList;
         }
 
@@ -115,7 +144,7 @@ public class CommentFragment extends Fragment {
             return mCommentList;
         }
 
-        public void setCommentList(List<CommentBody> commentList) {
+        void setCommentList(List<CommentBody> commentList) {
             mCommentList = commentList;
         }
 
@@ -161,11 +190,42 @@ public class CommentFragment extends Fragment {
             @BindView(R.id.delete_comment)
             ImageView deleteComment;
 
-            public CommentViewHolder(@NonNull View itemView) {
+            CommentViewHolder(@NonNull View itemView) {
                 super(itemView);
                 ButterKnife.bind(this, itemView);
             }
         }
     }
 
+
+    class LoadCommentAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                mCommentList = WoocommerceRepository.getInstance()
+                        .getCommentList(mProductId);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
+            getLiveCommentList().setValue(mCommentList);
+            if (mCommentList == null || mCommentList.isEmpty()) {
+                emptyComment.setVisibility(View.VISIBLE);
+                parentRelative.setVisibility(View.GONE);
+            } else {
+                commentRecyclerView.setVisibility(View.VISIBLE);
+                parentRelative.setVisibility(View.VISIBLE);
+            }
+
+
+        }
+    }
 }

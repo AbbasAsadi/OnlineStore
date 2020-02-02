@@ -1,4 +1,4 @@
-package com.example.onlinestore.network;
+package com.example.onlinestore.repository;
 
 
 import android.util.Log;
@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.onlinestore.model.categories.CategoryBody;
 import com.example.onlinestore.model.comment.CommentBody;
 import com.example.onlinestore.model.products.ProductBody;
+import com.example.onlinestore.network.RetrofitInstance;
 import com.example.onlinestore.network.interfaces.WoocommerceService;
 
 import java.io.IOException;
@@ -15,8 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WoocommerceRepository {
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
@@ -32,9 +31,7 @@ public class WoocommerceRepository {
     private List<ProductBody> mTopRatedProducts;
     private List<ProductBody> mSearchedProducts;
     private List<ProductBody> mRelatedProducts;
-    private List<CategoryBody> mCategoriesList;
-    private List<CommentBody> mCommentList;
-    private int mClickedProductId;
+    private List<CategoryBody> mCategoriesList = new ArrayList<>();
     private Map<String, String> mQueries = new HashMap<String, String>() {
         {
             put("consumer_key", CONSUMER_KEY);
@@ -130,37 +127,17 @@ public class WoocommerceRepository {
         }
         return subCategoryList;
     }
-    public List<CommentBody> getCommentList() {
-        return mCommentList;
-    }
-
-    public void setCommentList(int id) {
+    public List<CommentBody> getCommentList(int id) throws IOException {
         Call<List<CommentBody>> call = mWoocommerceService
                 .getProductReviews(id, CONSUMER_KEY, CONSUMER_SECRET , "date");
-        call.enqueue(new Callback<List<CommentBody>>() {
-            @Override
-            public void onResponse(Call<List<CommentBody>> call, Response<List<CommentBody>> response) {
-                mCommentList = response.body();
-            }
-
-            @Override
-            public void onFailure(Call<List<CommentBody>> call, Throwable t) {
-
-            }
-        });
+        return call.execute().body();
     }
+
 
     public List<ProductBody> getAmazingProducts() {
         return mAmazingProducts;
     }
 
-    public int getClickedProductId() {
-        return mClickedProductId;
-    }
-
-    public void setClickedProductId(int clickedProductId) {
-        mClickedProductId = clickedProductId;
-    }
 
     public List<ProductBody> getNewestProductList() {
         return mRecentProducts;
@@ -193,5 +170,24 @@ public class WoocommerceRepository {
 
         }
         return null;
+    }
+
+    public CategoryBody getCategoryById(int id) {
+        for (CategoryBody category : mCategoriesList) {
+            if (category.getId() == id)
+                return category;
+        }
+        return null;
+    }
+
+    public List<ProductBody> getProductByCategoryId(int categoryId) throws IOException {
+        Call<List<ProductBody>> call = mWoocommerceService
+                .getProduuctsOfSpeceficCategory(CONSUMER_KEY,
+                        CONSUMER_SECRET,
+                        categoryId,
+                        20,
+                        "date");
+
+        return call.execute().body();
     }
 }

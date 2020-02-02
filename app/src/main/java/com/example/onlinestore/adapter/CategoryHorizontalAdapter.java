@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.Activity.CategoryListActivity;
 import com.example.onlinestore.model.categories.CategoryBody;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
         holder.titleCategory.setText(mCategoryList.get(position).getName());
         holder.parentCardView.setOnClickListener(view -> {
+            mContext.startActivity(CategoryListActivity.newIntent(mContext , mCategoryList.get(position).getId()));
 
 
         });

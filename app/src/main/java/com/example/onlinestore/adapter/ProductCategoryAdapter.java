@@ -11,6 +11,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.Activity.CategoryListActivity;
+import com.example.onlinestore.controller.Activity.ProductListActivity;
 import com.example.onlinestore.model.categories.CategoryBody;
 import com.example.onlinestore.model.products.CategoriesItem;
 
@@ -22,7 +24,6 @@ import butterknife.ButterKnife;
 public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategoryAdapter.categoryViewHolder> {
     private List<CategoriesItem> mListCategories;
     private Context mContext;
-    private CategoryRecyclerViewAdapterInterface mInterface;
     public ProductCategoryAdapter(List<CategoriesItem> categories, Context context) {
         mListCategories = categories;
         mContext = context;
@@ -40,11 +41,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
     @Override
     public void onBindViewHolder(@NonNull categoryViewHolder holder, int position) {
         holder.titleCategory.setText(mListCategories.get(position).getName());
-        holder.parentCardView.setOnClickListener(view -> {
-
-            mInterface.onCategoryClicked(position, mListCategories.get(position));
-
-        });
+        holder.parentCardView.setOnClickListener(view ->
+                mContext.startActivity(ProductListActivity
+                .newIntent(mContext , mListCategories.get(position).getId())));
     }
 
 
@@ -64,9 +63,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
         }
     }
 
-    public interface CategoryRecyclerViewAdapterInterface {
-        void onCategoryClicked(int position, CategoriesItem items);
-    }
+
 
     public void setListCategories(List<CategoriesItem> listCategories) {
         mListCategories = listCategories;
@@ -74,9 +71,5 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
 
     public List<CategoriesItem> getListCategories() {
         return mListCategories;
-    }
-
-    public void setInterface(CategoryRecyclerViewAdapterInterface anInterface) {
-        mInterface = anInterface;
     }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.App;
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.Activity.DetailProductActivity;
 import com.example.onlinestore.model.products.ProductBody;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private List<ProductBody> mListProduct;
     private Context mContext;
 
@@ -41,9 +42,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         mListProduct = new ArrayList<>();
         mListProduct = listProduct;
     }
-    public void addToProductList(List<ProductBody> productList ) {
+
+    public void addToProductList(List<ProductBody> productList) {
         this.mListProduct.addAll(productList);
     }
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,11 +56,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        Picasso.get().load(mListProduct.get(position).getImages().get(0).getSrc())
+        ProductBody productBody = mListProduct.get(position);
+
+        Picasso.get().load(productBody.getImages().get(0).getSrc())
                 .placeholder(R.drawable.digikala_place_holder).into(holder.productImage);
 
-        holder.titleProduct.setText(mListProduct.get(position).getName());
-        if (!mListProduct.get(position).getShortDescription().isEmpty()){
+        holder.titleProduct.setText(productBody.getName());
+        if (!productBody.getShortDescription().isEmpty()) {
             holder.shortDescription.setVisibility(View.VISIBLE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 holder.shortDescription
@@ -65,37 +70,43 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                                 .get(position).getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
             } else {
                 holder.shortDescription
-                        .setText(Html.fromHtml(mListProduct.get(position)
+                        .setText(Html.fromHtml(productBody
                                 .getShortDescription()));
             }
-        }else holder.shortDescription.setVisibility(View.INVISIBLE);
+        } else holder.shortDescription.setVisibility(View.INVISIBLE);
 
-        if (!mListProduct.get(position).getRegularPrice()
-                .equals(mListProduct.get(position).getPrice())) {
+        if (!productBody.getRegularPrice()
+                .equals(productBody.getPrice())) {
             holder.regularPrice.setVisibility(View.VISIBLE);
             holder.amazingSuggestionLable.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.regularPrice.setVisibility(View.INVISIBLE);
             holder.amazingSuggestionLable.setVisibility(View.GONE);
         }
 
-        holder.titleProduct.setText(mListProduct.get(position).getName());
-        String regularPrice = App.getInstance()
-                .getPersianNumber(Double
-                        .parseDouble(mListProduct.get(position).getRegularPrice()))
-                + " تومان";
-        holder.regularPrice.setText(regularPrice);
-        String price =  App.getInstance()
-                .getPersianNumber(Double.parseDouble(mListProduct.get(position).getPrice()))
+        holder.titleProduct.setText(productBody.getName());
+        if (!productBody.getRegularPrice().equals("")){
+            String regularPrice = App.getInstance()
+                    .getPersianNumber(Double
+                            .parseDouble(productBody.getRegularPrice()))
+                    + " تومان";
+            holder.regularPrice.setText(regularPrice);
+            holder.regularPrice.setVisibility(View.VISIBLE);
+        }else {
+            holder.regularPrice.setText("");
+            holder.regularPrice.setVisibility(View.INVISIBLE);
+        }
+
+        String price = App.getInstance()
+                .getPersianNumber(Double.parseDouble(productBody.getPrice()))
                 + " تومان";
         holder.salePrice.setText(price);
 
-        holder.productCardView.setOnClickListener(view -> {
-            /*EventBus.getDefault()
-                    .post(new OnProductClickedMessage(mListProduct.get(position).getId()));*/
-        });
+        holder.productCardView.setOnClickListener(view ->
+                mContext.startActivity(DetailProductActivity
+                .newIntent(mContext , mListProduct.get(position).getId())));
     }
-    
+
 
     @Override
     public int getItemCount() {
@@ -105,20 +116,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public class ProductViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.title_product)
         public TextView titleProduct;
+        @BindView(R.id.product_img)
+        public ImageView productImage;
         @BindView(R.id.short_description)
         TextView shortDescription;
         @BindView(R.id.price_regular)
         TextView regularPrice;
         @BindView(R.id.sale_price)
         TextView salePrice;
-        @BindView(R.id.product_img)
-        public ImageView productImage;
         @BindView(R.id.amazing_suggestion_label)
         ImageView amazingSuggestionLable;
         @BindView(R.id.product_cardView)
         CardView productCardView;
 
-        public ProductViewHolder(@NonNull View itemView) {
+        ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -25,6 +25,14 @@ public interface WoocommerceService {
                                               @Query("per_page") int perPage,
                                               @Query("orderby") String orderBy);
 
+    @GET("products")
+    Call<List<ProductBody>> getProduuctsOfSpeceficCategory(
+            @Query("consumer_key") String consumerKey,
+            @Query("consumer_secret") String consumerSecret,
+            @Query("category") int categoryId,
+            @Query("per_page")int perPage,
+            @Query("orderby") String orderBy);
+
     @GET("products/categories")
     Call<List<CategoryBody>> getCategories(@Query("consumer_key") String consumerKey,
                                            @Query("consumer_secret") String consumerSecret,
@@ -34,5 +42,7 @@ public interface WoocommerceService {
     Call<List<CommentBody>> getProductReviews(@Query("product") int productId,
                                               @Query("consumer_key") String consumerKey,
                                               @Query("consumer_secret") String consumerSecret,
-                                              @Query("orderby") String orderby);
+                                              @Query("orderby") String orderBy);
+
+
 }

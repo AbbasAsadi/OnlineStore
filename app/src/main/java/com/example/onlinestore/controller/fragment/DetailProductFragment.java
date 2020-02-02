@@ -1,6 +1,7 @@
 package com.example.onlinestore.controller.fragment;
 
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -19,11 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onlinestore.App;
 import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
 import com.example.onlinestore.adapter.ProductCategoryAdapter;
 import com.example.onlinestore.model.products.ProductBody;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 import com.example.onlinestore.utils.sliderr.PicassoImageLoadingService;
 import com.google.android.material.card.MaterialCardView;
 
@@ -96,12 +98,14 @@ public class DetailProductFragment extends Fragment {
     public DetailProductFragment() {
         // Required empty public constructor
     }
-
-    public static DetailProductFragment newInstance() {
+    private DetailProductFragment(int productId) {
+        mProductId = productId;
+    }
+    public static DetailProductFragment newInstance(int productId) {
 
         Bundle args = new Bundle();
 
-        DetailProductFragment fragment = new DetailProductFragment();
+        DetailProductFragment fragment = new DetailProductFragment(productId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -115,7 +119,6 @@ public class DetailProductFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRepository = WoocommerceRepository.getInstance();
-        mProductId = mRepository.getClickedProductId();
         mProduct = mRepository.getProductById(mProductId);
         Slider.init(new PicassoImageLoadingService());
         mRelatedProduct = new ArrayList<>();
@@ -129,8 +132,8 @@ public class DetailProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_detail_product, container, false);
-        ButterKnife.bind(this, view);
+        View rootView = inflater.inflate(R.layout.fragment_detail_product, container, false);
+        ButterKnife.bind(this, rootView);
 
         setSliderAdapter();
 
@@ -138,18 +141,11 @@ public class DetailProductFragment extends Fragment {
 
         setAmazingSuggestionStatus();
 
-        regularPrice.setText(mProduct.getRegularPrice());
-        salePrice.setText(mProduct.getSalePrice());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (shortDescriptionProduct != null) {
-                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
-            }
-            descriptionProduct.setText(Html.fromHtml(mProduct.getDescription(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            if (shortDescriptionProduct != null)
-                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription()));
-            descriptionProduct.setText(Html.fromHtml(mProduct.getDescription()));
-        }
+        setRegularPrice();
+
+        setPrice();
+
+        setShortDescription();
 
         categoryProductRecyclerView
                 .setLayoutManager(new LinearLayoutManager
@@ -164,15 +160,70 @@ public class DetailProductFragment extends Fragment {
         updateRelatedProductAdapter();
         relatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
 
+        handleClickOnCommentButton();
+
+        handleShareProductLink();
+
+        return rootView;
+    }
+
+    private void handleShareProductLink() {
+        String shareMessage = mProduct.getName() + "\n" +
+                "را در " + getString(R.string.digikala_txt) + " ببین" + "\n" +
+                mProduct.getPermalink();
+        shareProduct.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT , shareMessage);
+            intent.setType("text/plain");
+            startActivity(Intent.createChooser(intent,
+                    getResources().getString(R.string.share_via)));
+        });
+    }
+
+    private void handleClickOnCommentButton() {
         userComments.setOnClickListener(view1 -> {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_product_Activity , CommentFragment.newInstance())
+                    .replace(R.id.detail_product_Activity , CommentFragment.newInstance(mProductId))
                     .addToBackStack(null)
                     .commit();
 
         });
+    }
 
-        return view;
+    private void setShortDescription() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (shortDescriptionProduct != null) {
+                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+            }
+            descriptionProduct.setText(Html.fromHtml(mProduct.getDescription(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            if (shortDescriptionProduct != null)
+                shortDescriptionProduct.setText(Html.fromHtml(mProduct.getShortDescription()));
+            descriptionProduct.setText(Html.fromHtml(mProduct.getDescription()));
+        }
+    }
+
+    private void setPrice() {
+        String price = App.getInstance()
+                .getPersianNumber(Double.parseDouble(mProduct.getPrice()))
+                + " تومان";
+        salePrice.setText(price);
+    }
+
+    private void setRegularPrice() {
+        if (!mProduct.getRegularPrice().equals("")){
+            String regularPriceStr = App.getInstance()
+                    .getPersianNumber(Double
+                            .parseDouble(mProduct.getRegularPrice()))
+                    + " تومان";
+
+            regularPrice.setText(regularPriceStr);
+            regularPrice.setVisibility(View.VISIBLE);
+        }else {
+            regularPrice.setVisibility(View.INVISIBLE);
+            regularPrice.setText("");
+        }
     }
 
     private void updateRelatedProductAdapter() {
@@ -224,6 +275,7 @@ public class DetailProductFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        setSliderAdapter();
         updateCategoryAdapter();
         updateRelatedProductAdapter();
     }

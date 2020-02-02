@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
+import com.example.onlinestore.controller.Activity.ProductListActivity;
 import com.example.onlinestore.model.categories.CategoryBody;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,13 +31,13 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class SubCategoryFragment extends Fragment {
-    public static final String TAG = "SubCategoryFragment";
+    private static final String TAG = "SubCategoryFragment";
 
     @BindView(R.id.sub_category_recyclerView)
     RecyclerView mSubCategoryRecyclerView;
 
-    int mParentCategoryId;
-    List<CategoryBody> mSubCategoryList;
+    private int mParentCategoryId;
+    private List<CategoryBody> mSubCategoryList;
     private SubCategoryAdapter mAdapter;
 
     public SubCategoryFragment() {
@@ -73,7 +73,7 @@ public class SubCategoryFragment extends Fragment {
 
         updateSubCategoryAdapter();
         mSubCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(
-                getActivity() , RecyclerView.VERTICAL , false
+                getActivity(), RecyclerView.VERTICAL, false
         ));
         return view;
     }
@@ -87,7 +87,7 @@ public class SubCategoryFragment extends Fragment {
     private void updateSubCategoryAdapter() {
         if (mAdapter == null) {
             mAdapter = new SubCategoryAdapter();
-        }else {
+        } else {
             mAdapter.notifyDataSetChanged();
         }
         mSubCategoryRecyclerView.setAdapter(mAdapter);
@@ -102,7 +102,7 @@ public class SubCategoryFragment extends Fragment {
         public SubCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new SubCategoryViewHolder(LayoutInflater
                     .from(getActivity())
-                    .inflate(R.layout.sub_category_item , parent , false));
+                    .inflate(R.layout.sub_category_item, parent, false));
         }
 
         @Override
@@ -112,15 +112,19 @@ public class SubCategoryFragment extends Fragment {
                     (R.drawable.digikala_place_holder).into(holder.subCategoryImage);
             holder.parentLayout.setOnClickListener(view -> {
                 //on Category clicked
-            });      }
+                startActivity(ProductListActivity
+                        .newIntent(getActivity(),
+                                mSubCategoryList.get(position).getId()));
+            });
+        }
 
         @Override
         public int getItemCount() {
-            Log.d(TAG, "getItemCount: "+ mSubCategoryList.size() + " id: " + mParentCategoryId);
+            Log.d(TAG, "getItemCount: " + mSubCategoryList.size() + " id: " + mParentCategoryId);
             return mSubCategoryList.size();
         }
 
-        class SubCategoryViewHolder extends RecyclerView.ViewHolder{
+        class SubCategoryViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.sub_category_title)
             TextView SubCategoryTitle;
             @BindView(R.id.sub_category_img)
@@ -128,9 +132,9 @@ public class SubCategoryFragment extends Fragment {
             @BindView(R.id.sub_category_relative)
             RelativeLayout parentLayout;
 
-            public SubCategoryViewHolder(@NonNull View itemView) {
+            SubCategoryViewHolder(@NonNull View itemView) {
                 super(itemView);
-                ButterKnife.bind(this , itemView);
+                ButterKnife.bind(this, itemView);
             }
         }
     }

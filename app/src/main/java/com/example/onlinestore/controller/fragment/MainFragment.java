@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.CategoryHorizontalAdapter;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 import com.example.onlinestore.utils.sliderr.MainSliderAdapter;
 import com.example.onlinestore.utils.sliderr.PicassoImageLoadingService;
 
@@ -138,8 +138,9 @@ public class MainFragment extends Fragment {
 
     private void updateCategoryAdapter() {
         if (mCategoryAdapter == null) {
-            mCategoryAdapter = new CategoryHorizontalAdapter(mRepository.getFilteredCategoryList(0), mContext);
-
+            mCategoryAdapter = new
+                    CategoryHorizontalAdapter(mRepository
+                    .getFilteredCategoryList(0), mContext);
         } else {
             mCategoryAdapter.setCategoryList(mRepository.getFilteredCategoryList(0));
             mCategoryAdapter.notifyDataSetChanged();

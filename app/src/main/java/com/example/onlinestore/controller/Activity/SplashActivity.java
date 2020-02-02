@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.onlinestore.R;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         productsAsync.execute();
     }
 
-    private class GetProductsAsync extends AsyncTask<Void , String , Void> {
+    private class GetProductsAsync extends AsyncTask<Void , Void , Void> {
         private final WoocommerceRepository Repository = WoocommerceRepository.getInstance();
 
         @Override
@@ -55,5 +55,11 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }

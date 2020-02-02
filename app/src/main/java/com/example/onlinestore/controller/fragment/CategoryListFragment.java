@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.onlinestore.R;
 import com.example.onlinestore.model.categories.CategoryBody;
-import com.example.onlinestore.network.WoocommerceRepository;
+import com.example.onlinestore.repository.WoocommerceRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -35,15 +35,16 @@ public class CategoryListFragment extends Fragment {
     @BindView(R.id.viewPager)
     ViewPager2 viewPager;
 
+    private int mClickedCategoryId;
     private List<CategoryBody> mCategoriesList;
     private WoocommerceRepository mRepository;
     private CategoryViewPagerAdapter mPagerAdapter;
 
-    public static CategoryListFragment newInstance() {
+    public static CategoryListFragment newInstance(int id) {
         
         Bundle args = new Bundle();
         
-        CategoryListFragment fragment = new CategoryListFragment();
+        CategoryListFragment fragment = new CategoryListFragment(id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +53,9 @@ public class CategoryListFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    private CategoryListFragment(int id) {
+        mClickedCategoryId = id;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,10 @@ public class CategoryListFragment extends Fragment {
         mPagerAdapter = new CategoryViewPagerAdapter(CategoryListFragment.this);
         viewPager.setAdapter(mPagerAdapter);
         viewPager.setOffscreenPageLimit(3);
+        viewPager.setCurrentItem(mRepository
+                .getFilteredCategoryList(0)
+                .indexOf(mRepository.getCategoryById(mClickedCategoryId))
+        );
 
         List<CategoryBody> parentCategoryList = mRepository.getFilteredCategoryList(0);
         Log.d(TAG, "onCreateView: " + parentCategoryList.size());

@@ -12,14 +12,21 @@ import com.example.onlinestore.controller.SingleFragmentActivity;
 public class DetailProductActivity extends SingleFragmentActivity {
 
 
-    public static Intent newIntent(Context context) {
+    public static final String PRODUCT_ID = "productId";
+
+    public static Intent newIntent(Context context , int productId) {
         Intent intent = new Intent(context, DetailProductActivity.class);
+        intent.putExtra(PRODUCT_ID, productId);
         return intent;
     }
 
     @Override
     public Fragment getFragment() {
-        return DetailProductFragment.newInstance();
+        int id = 0;
+        if (getIntent().getExtras().containsKey(PRODUCT_ID)) {
+            id = (int) getIntent().getExtras().get(PRODUCT_ID);
+        }
+        return DetailProductFragment.newInstance(id);
     }
 
     @Override

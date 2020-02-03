@@ -9,13 +9,6 @@ public class RetrofitInstance {
     private static RetrofitInstance sInstance;
     private Retrofit mRetrofit;
 
-    public static RetrofitInstance getInstance(String baseUrl) {
-        if (sInstance == null) {
-            sInstance = new RetrofitInstance(baseUrl);
-        }
-        return sInstance;
-    }
-
     private RetrofitInstance(String baseUrl) {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -30,6 +23,13 @@ public class RetrofitInstance {
                 .client(httpClient.build())
                 .build();
 
+    }
+
+    public static RetrofitInstance getInstance(String baseUrl) {
+        if (sInstance == null) {
+            sInstance = new RetrofitInstance(baseUrl);
+        }
+        return sInstance;
     }
 
     public Retrofit getRetrofit() {

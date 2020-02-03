@@ -319,7 +319,7 @@
             app:layout_constraintTop_toBottomOf="@id/img8" />
 
         <TextView
-            android:id="@+id/fullList2"
+            android:id="@+id/fullList_popular_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

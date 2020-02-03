@@ -26,15 +26,10 @@ import butterknife.ButterKnife;
 public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapterHorizontal.HorizontalProductViewHolder> {
     private List<ProductBody> mListProduct;
     private Context mContext;
-    private ProductBody mProductBody;
 
     public ProductAdapterHorizontal(List<ProductBody> listProduct, Context context) {
         mListProduct = listProduct;
         mContext = context;
-    }
-
-    public List<ProductBody> getListProduct() {
-        return mListProduct;
     }
 
     public void setListProduct(List<ProductBody> listProduct) {
@@ -50,39 +45,52 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalProductViewHolder holder, int position) {
-        mProductBody = mListProduct.get(position);
-        if (mProductBody.getPrice().equals(""))
+        ProductBody productBody = mListProduct.get(position);
+        if (productBody.getPrice().equals(""))
             mListProduct.remove(position);
-        if (mProductBody.getImages().isEmpty()) {
+        if (productBody.getImages().isEmpty()) {
             holder.productImage.setImageResource(R.drawable.digikala_place_holder);
         } else {
-            Picasso.get().load(mProductBody.getImages().get(0).getSrc())
+            Picasso.get().load(productBody.getImages().get(0).getSrc())
                     .placeholder(R.drawable.digikala_place_holder)
                     .into(holder.productImage);
         }
-        if (!mProductBody.getRegularPrice().equals(mProductBody.getPrice())) {
+        if (!productBody.getRegularPrice().equals(productBody.getPrice())) {
             holder.priceRegular.setVisibility(View.VISIBLE);
         } else holder.priceRegular.setVisibility(View.GONE);
 
-        holder.titleProduct.setText(mProductBody.getName());
-        String regularPrice = App.getInstance()
-                .getPersianNumber(Double.parseDouble(mProductBody.getRegularPrice()))
-                + " تومان";
+        holder.titleProduct.setText(productBody.getName());
 
-        holder.priceRegular.setText(regularPrice);
-        String price = App.getInstance()
-                .getPersianNumber(Double.parseDouble(mProductBody.getPrice()))
-                + " تومان";
-        holder.salePrice.setText(price);
 
-        holder.horizontalCardView.setOnClickListener(view -> {
-            Toast.makeText(mContext,
-                    "clickedId" + mListProduct.get(position).getId(),
-                    Toast.LENGTH_SHORT).show();
-           // TmpRepository.getInstance().setLastProductId();
-            mContext.startActivity(DetailProductActivity
-                    .newIntent(mContext , mListProduct.get(position).getId()));
-        });
+        if (!productBody.getRegularPrice().equals("")) {
+            String regularPrice = App.getInstance()
+                    .getPersianNumber(Double.parseDouble(productBody.getRegularPrice()))
+                    + " تومان";
+
+            holder.priceRegular.setText(regularPrice);
+        } else {
+            holder.priceRegular.setVisibility(View.INVISIBLE);
+        }
+
+        if (!productBody.getPrice().equals("")) {
+            String price = App.getInstance()
+                    .getPersianNumber(Double.parseDouble(productBody.getPrice()))
+                    + " تومان";
+            holder.salePrice.setText(price);
+        } else {
+            holder.salePrice.setVisibility(View.INVISIBLE);
+        }
+
+        if (!mListProduct.get(position).getName().equals("تخفیفات")) {
+            holder.horizontalCardView.setOnClickListener(view -> {
+                Toast.makeText(mContext,
+                        "clickedId" + mListProduct.get(position).getId(),
+                        Toast.LENGTH_SHORT).show();
+                mContext.startActivity(DetailProductActivity
+                        .newIntent(mContext, mListProduct.get(position).getId()));
+            });
+        }
+
 
     }
 
@@ -91,7 +99,7 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
         return mListProduct.size();
     }
 
-    public class HorizontalProductViewHolder extends RecyclerView.ViewHolder {
+    class HorizontalProductViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.product_img_horizontal_recyclerView)
         ImageView productImage;
         @BindView(R.id.title_product_horizontal_recyclerView)
@@ -103,7 +111,7 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
         @BindView(R.id.horizontal_cardView)
         MaterialCardView horizontalCardView;
 
-        public HorizontalProductViewHolder(@NonNull View itemView) {
+        HorizontalProductViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

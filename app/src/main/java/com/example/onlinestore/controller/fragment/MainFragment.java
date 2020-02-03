@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.CategoryHorizontalAdapter;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
+import com.example.onlinestore.controller.Activity.ProductListActivity;
 import com.example.onlinestore.repository.WoocommerceRepository;
 import com.example.onlinestore.utils.sliderr.MainSliderAdapter;
 import com.example.onlinestore.utils.sliderr.PicassoImageLoadingService;
@@ -38,6 +40,10 @@ public class MainFragment extends Fragment {
     RecyclerView mRecyclerViewNewestProduct;
     @BindView(R.id.popular_products_recyclerview)
     RecyclerView mRecyclerViewPopularProduct;
+    @BindView(R.id.fullList_popular_product)
+    TextView mFullListTopRated;
+    @BindView(R.id.fullListNewProduct)
+    TextView mFullListNewes;
     //    @BindView(R.id.)
 //    private RecyclerView mRecyclerViewTopRatedProduct;
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
@@ -64,25 +70,26 @@ public class MainFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Slider.init(new PicassoImageLoadingService());
-        mRepository = WoocommerceRepository.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, rootView);
+        mRepository = WoocommerceRepository.getInstance();
 
         mSlider.setAdapter(new MainSliderAdapter());
-
-        updateCategoryAdapter();
         mRecyclerViewCategory.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
+        mRecyclerViewCategory.setVisibility(View.VISIBLE);
+        updateCategoryAdapter();
 
         updateAmazingProductAdapter();
         mRecyclerViewAmazingSuggest.setLayoutManager(new LinearLayoutManager
@@ -97,14 +104,24 @@ public class MainFragment extends Fragment {
         mRecyclerViewPopularProduct.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
 
-        return view;
+
+        mFullListTopRated.setOnClickListener(view1 ->
+                mContext.startActivity(ProductListActivity
+                        .newIntent(mContext, ProductListActivity.TOP_RATED_PRODUCT)));
+
+        mFullListNewes.setOnClickListener(view2 ->
+                mContext.startActivity(ProductListActivity
+                        .newIntent(mContext, ProductListActivity.NEWEST_PRODUCT)));
+
+
+        return rootView;
     }
 
     private void updatePopularProductAdapter() {
         if (mProductAdapterPopularProduct == null) {
             mProductAdapterPopularProduct = new ProductAdapterHorizontal(
                     mRepository.getTopRatedProductList(), mContext);
-        }else {
+        } else {
             mProductAdapterPopularProduct.setListProduct(mRepository.getTopRatedProductList());
             mProductAdapterPopularProduct.notifyDataSetChanged();
         }
@@ -116,7 +133,7 @@ public class MainFragment extends Fragment {
         if (mProductAdapterNewestProduct == null) {
             mProductAdapterNewestProduct = new ProductAdapterHorizontal
                     (mRepository.getNewestProductList(), mContext);
-        }else {
+        } else {
             mProductAdapterNewestProduct.setListProduct(mRepository.getNewestProductList());
             mProductAdapterNewestProduct.notifyDataSetChanged();
         }
@@ -139,10 +156,9 @@ public class MainFragment extends Fragment {
     private void updateCategoryAdapter() {
         if (mCategoryAdapter == null) {
             mCategoryAdapter = new
-                    CategoryHorizontalAdapter(mRepository
-                    .getFilteredCategoryList(0), mContext);
+                    CategoryHorizontalAdapter(mRepository.getParentCategoryList(), mContext);
         } else {
-            mCategoryAdapter.setCategoryList(mRepository.getFilteredCategoryList(0));
+            mCategoryAdapter.setCategoryList(mRepository.getParentCategoryList());
             mCategoryAdapter.notifyDataSetChanged();
         }
         mRecyclerViewCategory.setAdapter(mCategoryAdapter);
@@ -157,8 +173,5 @@ public class MainFragment extends Fragment {
         updatePopularProductAdapter();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
+
 }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.ProductAdapter;
+import com.example.onlinestore.controller.Activity.ProductListActivity;
 import com.example.onlinestore.model.products.ProductBody;
 import com.example.onlinestore.repository.WoocommerceRepository;
 
@@ -30,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,19 +58,22 @@ public class ProductListFragment extends Fragment {
     TextView subSortTxt;
     @BindView(R.id.filter_relative)
     RelativeLayout filterRelative;
-
-    private int mCategoryId;
+    private int mCategoryId = -1;
     private MutableLiveData<List<ProductBody>> mLiveProductList;
     private List<ProductBody> mProducts;
     private ProductAdapter mProductAdapter;
-
-
+    private String mListType = "empty";
     public ProductListFragment() {
         // Required empty public constructor
     }
 
+
     private ProductListFragment(int id) {
         mCategoryId = id;
+    }
+
+    private ProductListFragment(String listType) {
+        mListType = listType;
     }
 
     public static ProductListFragment newInstance(int id) {
@@ -78,6 +83,20 @@ public class ProductListFragment extends Fragment {
         ProductListFragment fragment = new ProductListFragment(id);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static ProductListFragment newInstance(String listType) {
+
+        Bundle args = new Bundle();
+
+        ProductListFragment fragment = new ProductListFragment(listType);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @OnClick(R.id.back_toolbar_product_list)
+    void onBackClick() {
+        getActivity().finish();
     }
 
     private MutableLiveData<List<ProductBody>> getLiveProductList() {
@@ -134,6 +153,7 @@ public class ProductListFragment extends Fragment {
             updateProductAdapter();
     }
 
+
     private void updateProductAdapter() {
         if (mProductAdapter == null) {
             mProductAdapter = new
@@ -150,11 +170,28 @@ public class ProductListFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            try {
-                mProducts = WoocommerceRepository.getInstance()
-                        .getProductByCategoryId(mCategoryId);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (mListType.equals("empty")) {
+                try {
+                    mProducts = WoocommerceRepository.getInstance()
+                            .getProductByCategoryId(mCategoryId);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (mCategoryId == -1) {
+                switch (mListType) {
+                    case ProductListActivity.NEWEST_PRODUCT:
+                        mProducts = WoocommerceRepository.getInstance().getNewestProductList();
+                        break;
+                    case ProductListActivity.POPULAR_PRODUCT:
+                        mProducts = WoocommerceRepository.getInstance().getPopularProductList();
+                        break;
+                    case ProductListActivity.SPECIAL_SALE:
+                        mProducts = WoocommerceRepository.getInstance().getSpecialSaleList();
+                        break;
+                    case ProductListActivity.TOP_RATED_PRODUCT:
+                        mProducts = WoocommerceRepository.getInstance().getTopRatedProductList();
+                        break;
+                }
             }
             return null;
         }
@@ -162,6 +199,8 @@ public class ProductListFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mCategoryId = -1;
+            mListType = "empty";
             progressBar.setVisibility(View.GONE);
             getLiveProductList().setValue(mProducts);
             if (mProducts == null || mProducts.isEmpty()) {

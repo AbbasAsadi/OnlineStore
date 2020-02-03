@@ -34,17 +34,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         mContext = context;
     }
 
-    public List<ProductBody> getListProduct() {
-        return mListProduct;
-    }
-
     public void setListProduct(List<ProductBody> listProduct) {
         mListProduct = new ArrayList<>();
         mListProduct = listProduct;
-    }
-
-    public void addToProductList(List<ProductBody> productList) {
-        this.mListProduct.addAll(productList);
     }
 
     @NonNull
@@ -85,26 +77,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
 
         holder.titleProduct.setText(productBody.getName());
-        if (!productBody.getRegularPrice().equals("")){
+        if (!productBody.getRegularPrice().equals("")) {
             String regularPrice = App.getInstance()
                     .getPersianNumber(Double
                             .parseDouble(productBody.getRegularPrice()))
                     + " تومان";
             holder.regularPrice.setText(regularPrice);
             holder.regularPrice.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.regularPrice.setText("");
             holder.regularPrice.setVisibility(View.INVISIBLE);
         }
+        if (!productBody.getPrice().equals("")) {
+            String price = App.getInstance()
+                    .getPersianNumber(Double.parseDouble(productBody.getPrice()))
+                    + " تومان";
+            holder.salePrice.setText(price);
+        } else {
+            holder.regularPrice.setVisibility(View.INVISIBLE);
+        }
+        if (!mListProduct.get(position).getName().equals("تخفیفات")) {
+            holder.productCardView.setOnClickListener(view ->
+                    mContext.startActivity(DetailProductActivity
+                            .newIntent(mContext, mListProduct.get(position).getId())));
+        }
 
-        String price = App.getInstance()
-                .getPersianNumber(Double.parseDouble(productBody.getPrice()))
-                + " تومان";
-        holder.salePrice.setText(price);
-
-        holder.productCardView.setOnClickListener(view ->
-                mContext.startActivity(DetailProductActivity
-                .newIntent(mContext , mListProduct.get(position).getId())));
     }
 
 

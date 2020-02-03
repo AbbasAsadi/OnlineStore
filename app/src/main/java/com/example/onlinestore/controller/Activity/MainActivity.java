@@ -14,19 +14,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.onlinestore.R;
-import com.example.onlinestore.controller.fragment.MainFragment;
 import com.example.onlinestore.controller.SingleFragmentActivity;
+import com.example.onlinestore.controller.fragment.MainFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
 public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static long back_pressed;
     private Toolbar mTopToolbar;
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
+
     @Override
     public Fragment getFragment() {
         return MainFragment.newInstance(this);
@@ -57,7 +58,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    private static long back_pressed;
+
     @Override
     public void onBackPressed() {
         // Handle back click to close menu
@@ -80,9 +81,27 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                 //do nothing
                 break;
             case R.id.activity_main_drawer_category:
-                startActivity(CategoryListActivity.newIntent(this , -1));
+                startActivity(CategoryListActivity.newIntent(this, 0));
                 break;
-            case R.id.activity_main_drawer_settings:
+            case R.id.activity_main_drawer_shopping_basket:
+                break;
+            case R.id.activity_main_drawer_Bestselling:
+                //should ask
+                break;
+            case R.id.activity_main_drawer_special_sale:
+                startActivity(ProductListActivity
+                        .newIntent(this,
+                                ProductListActivity.SPECIAL_SALE));
+                break;
+            case R.id.activity_main_drawer_Most_visited:
+                startActivity(ProductListActivity
+                        .newIntent(this,
+                                ProductListActivity.POPULAR_PRODUCT));
+                break;
+            case R.id.activity_main_drawer_newest:
+                startActivity(ProductListActivity
+                        .newIntent(this,
+                                ProductListActivity.NEWEST_PRODUCT));
                 break;
             default:
                 break;
@@ -114,7 +133,7 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
     // Configure NavigationView
     private void configureNavigationView() {
-        this.navigationView =  findViewById(R.id.activity_main_nav_view);
+        NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

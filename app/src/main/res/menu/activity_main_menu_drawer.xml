@@ -35,9 +35,9 @@
             android:icon="@drawable/ic_star_1"
             android:title="پرفروش ترین ها" />
         <item
-            android:id="@+id/activity_main_drawer_special_offer"
+            android:id="@+id/activity_main_drawer_special_sale"
             android:icon="@drawable/ic_star_1"
-            android:title="پیشنهاد ویژه دیجی کالا" />
+            android:title="فروش ویژه دیجی کالا" />
 
         <item
             android:id="@+id/activity_main_drawer_Most_visited"

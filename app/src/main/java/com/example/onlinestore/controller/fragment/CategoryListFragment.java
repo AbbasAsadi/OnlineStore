@@ -2,6 +2,10 @@ package com.example.onlinestore.controller.fragment;
 
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,21 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.onlinestore.R;
-import com.example.onlinestore.model.categories.CategoryBody;
 import com.example.onlinestore.repository.WoocommerceRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,33 +31,33 @@ public class CategoryListFragment extends Fragment {
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager2 viewPager;
-
-    private int mClickedCategoryId;
-    private List<CategoryBody> mCategoriesList;
-    private WoocommerceRepository mRepository;
+    private int mPosition;
     private CategoryViewPagerAdapter mPagerAdapter;
-
-    public static CategoryListFragment newInstance(int id) {
-        
-        Bundle args = new Bundle();
-        
-        CategoryListFragment fragment = new CategoryListFragment(id);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     public CategoryListFragment() {
         // Required empty public constructor
     }
 
-    private CategoryListFragment(int id) {
-        mClickedCategoryId = id;
+    private CategoryListFragment(int position) {
+        mPosition = position;
     }
+
+    public static CategoryListFragment newInstance(int position) {
+
+        Bundle args = new Bundle();
+
+        CategoryListFragment fragment = new CategoryListFragment(position);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @OnClick(R.id.back_toolbar)
+    void backPress() {
+        getActivity().finish();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRepository = WoocommerceRepository.getInstance();
-        mCategoriesList = mRepository.getCategoriesList();
     }
 
     @Override
@@ -68,30 +65,36 @@ public class CategoryListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_list, container, false);
-        ButterKnife.bind(this , view);
-        mPagerAdapter = new CategoryViewPagerAdapter(CategoryListFragment.this);
-        viewPager.setAdapter(mPagerAdapter);
+        ButterKnife.bind(this, view);
+        updateCategoryAdapter();
+
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setCurrentItem(mRepository
-                .getFilteredCategoryList(0)
-                .indexOf(mRepository.getCategoryById(mClickedCategoryId))
-        );
+        viewPager.setCurrentItem(mPosition);
 
-        List<CategoryBody> parentCategoryList = mRepository.getFilteredCategoryList(0);
-        Log.d(TAG, "onCreateView: " + parentCategoryList.size());
+        Log.d(TAG, "onCreateView: " + WoocommerceRepository.getInstance().getParentCategoryList().size());
 
-        TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) -> {
-            if (position < parentCategoryList.size())
-                tab.setText(parentCategoryList.get(position).getName());
-            else
-                onDetach();
-        };
-        new TabLayoutMediator(tabLayout , viewPager , strategy).attach();
-
+        TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) ->
+                tab.setText(WoocommerceRepository.getInstance().getParentCategoryList().get(position).getName());
+        new TabLayoutMediator(tabLayout, viewPager, strategy).attach();
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCategoryAdapter();
+    }
+
+    private void updateCategoryAdapter() {
+        if (mPagerAdapter == null) {
+            mPagerAdapter = new
+                    CategoryViewPagerAdapter(CategoryListFragment.this);
+        } else {
+            mPagerAdapter.notifyDataSetChanged();
+        }
+        viewPager.setAdapter(mPagerAdapter);
+    }
 
 
     class CategoryViewPagerAdapter extends FragmentStateAdapter {
@@ -99,19 +102,19 @@ public class CategoryListFragment extends Fragment {
         CategoryViewPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }
-        List<CategoryBody> mParentCategoryList = mRepository.getFilteredCategoryList(0);
 
         @NonNull
         @Override
         public Fragment createFragment(int position) {
             return SubCategoryFragment
-                    .newInstance(mParentCategoryList
+                    .newInstance(WoocommerceRepository.getInstance().getParentCategoryList()
                             .get(position).getId());
         }
 
         @Override
         public int getItemCount() {
-            return mParentCategoryList.size();
+            return WoocommerceRepository.getInstance().getParentCategoryList().size();
         }
     }
+
 }

@@ -35,7 +35,7 @@
                 android:clickable="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_margin="8dp"
-                android:id="@+id/back_toolbar"
+                android:id="@+id/back_toolbar_product_list"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 app:srcCompat="@drawable/ic_arrow_forward_black_24dp"

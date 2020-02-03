@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
+
     public abstract Fragment getFragment();
+
     public abstract int getContentView();
+
     public abstract int getResourceId();
 
     @Override
@@ -17,7 +20,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         setContentView(getContentView());
 
         getSupportFragmentManager().beginTransaction()
-                .replace(getResourceId() , getFragment())
+                .replace(getResourceId(), getFragment())
                 .commit();
     }
 }

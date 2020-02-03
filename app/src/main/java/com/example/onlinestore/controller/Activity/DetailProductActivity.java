@@ -6,15 +6,15 @@ import android.content.Intent;
 import androidx.fragment.app.Fragment;
 
 import com.example.onlinestore.R;
-import com.example.onlinestore.controller.fragment.DetailProductFragment;
 import com.example.onlinestore.controller.SingleFragmentActivity;
+import com.example.onlinestore.controller.fragment.DetailProductFragment;
 
 public class DetailProductActivity extends SingleFragmentActivity {
 
 
     public static final String PRODUCT_ID = "productId";
 
-    public static Intent newIntent(Context context , int productId) {
+    public static Intent newIntent(Context context, int productId) {
         Intent intent = new Intent(context, DetailProductActivity.class);
         intent.putExtra(PRODUCT_ID, productId);
         return intent;
@@ -38,5 +38,4 @@ public class DetailProductActivity extends SingleFragmentActivity {
     public int getResourceId() {
         return R.id.detail_product_Activity;
     }
-
 }

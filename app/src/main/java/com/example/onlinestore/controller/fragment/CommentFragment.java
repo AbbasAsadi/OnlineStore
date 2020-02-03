@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,12 +40,6 @@ import butterknife.OnClick;
  */
 public class CommentFragment extends Fragment {
     private static final String TAG = "CommentFragment";
-
-    /*@OnClick(R.id.back_toolbar)
-    void onBackClick() {
-
-    }*/
-
     @BindView(R.id.comments_recyclerView)
     RecyclerView commentRecyclerView;
     @BindView(R.id.progress_bar)
@@ -57,8 +50,6 @@ public class CommentFragment extends Fragment {
     RelativeLayout parentRelative;
     @BindView(R.id.add_comment_fab)
     FloatingActionButton addCommentFab;
-
-
     private CommentAdapter mCommentAdapter;
     private int mProductId;
     private List<CommentBody> mCommentList;
@@ -80,12 +71,19 @@ public class CommentFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    @OnClick(R.id.back_toolbar)
+    void onBackPress() {
+        getFragmentManager().popBackStack();
+    }
+
     private MutableLiveData<List<CommentBody>> getLiveCommentList() {
         if (mLiveDataCommentList == null) {
             mLiveDataCommentList = new MutableLiveData<>();
         }
         return mLiveDataCommentList;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,21 +109,21 @@ public class CommentFragment extends Fragment {
 
         };
         Log.d(TAG, "onCreateView : mCommentList.size:" + mCommentList.size());
-        getLiveCommentList().observe(this , observer);
+        getLiveCommentList().observe(this, observer);
         updateCommentAdapter();
 
         return view;
     }
 
-   private void updateCommentAdapter() {
-       if (mCommentAdapter == null) {
-           mCommentAdapter = new CommentAdapter(getLiveCommentList().getValue());
-       } else {
-           mCommentAdapter.setCommentList(getLiveCommentList().getValue());
-           mCommentAdapter.notifyDataSetChanged();
-       }
-       commentRecyclerView.setAdapter(mCommentAdapter);
-   }
+    private void updateCommentAdapter() {
+        if (mCommentAdapter == null) {
+            mCommentAdapter = new CommentAdapter(getLiveCommentList().getValue());
+        } else {
+            mCommentAdapter.setCommentList(getLiveCommentList().getValue());
+            mCommentAdapter.notifyDataSetChanged();
+        }
+        commentRecyclerView.setAdapter(mCommentAdapter);
+    }
 
     @Override
     public void onResume() {
@@ -138,10 +136,6 @@ public class CommentFragment extends Fragment {
 
         CommentAdapter(List<CommentBody> commentList) {
             mCommentList = commentList;
-        }
-
-        public List<CommentBody> getCommentList() {
-            return mCommentList;
         }
 
         void setCommentList(List<CommentBody> commentList) {

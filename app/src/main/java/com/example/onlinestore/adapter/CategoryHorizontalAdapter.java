@@ -28,9 +28,6 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
         mContext = context;
     }
 
-    public List<CategoryBody> getCategoryList() {
-        return mCategoryList;
-    }
 
     public void setCategoryList(List<CategoryBody> categoryList) {
         mCategoryList = categoryList;
@@ -46,11 +43,8 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
         holder.titleCategory.setText(mCategoryList.get(position).getName());
-        holder.parentCardView.setOnClickListener(view -> {
-            mContext.startActivity(CategoryListActivity.newIntent(mContext , mCategoryList.get(position).getId()));
-
-
-        });
+        holder.parentCardView.setOnClickListener(view ->
+                mContext.startActivity(CategoryListActivity.newIntent(mContext, position)));
     }
 
     @Override
@@ -58,13 +52,13 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
         return mCategoryList.size();
     }
 
-    public class CategoryHolder extends RecyclerView.ViewHolder {
+    class CategoryHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.title_category_horizontal_recyclerView)
         TextView titleCategory;
         @BindView(R.id.category_cardView)
         CardView parentCardView;
 
-        public CategoryHolder(@NonNull View itemView) {
+        CategoryHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -20,19 +20,24 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CategoryListFragment extends Fragment {
     private static final String TAG = "CategoryListFragment";
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager2 viewPager;
+
+    @BindView(R.id.tab_layout_category_list_fragment)
+    TabLayout mTabLayout;
+    @BindView(R.id.viewPager_category_list_fragment)
+    ViewPager2 mViewPager;
+    /*@OnClick(R.id.back_toolbar)
+    void backPress() {
+        getActivity().finish();
+    }*/
     private int mPosition;
     private CategoryViewPagerAdapter mPagerAdapter;
+
     public CategoryListFragment() {
         // Required empty public constructor
     }
@@ -50,10 +55,6 @@ public class CategoryListFragment extends Fragment {
         return fragment;
     }
 
-    @OnClick(R.id.back_toolbar)
-    void backPress() {
-        getActivity().finish();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,14 +69,14 @@ public class CategoryListFragment extends Fragment {
         ButterKnife.bind(this, view);
         updateCategoryAdapter();
 
-        viewPager.setOffscreenPageLimit(3);
-        viewPager.setCurrentItem(mPosition);
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setCurrentItem(mPosition);
 
         Log.d(TAG, "onCreateView: " + WoocommerceRepository.getInstance().getParentCategoryList().size());
 
         TabLayoutMediator.TabConfigurationStrategy strategy = (tab, position) ->
                 tab.setText(WoocommerceRepository.getInstance().getParentCategoryList().get(position).getName());
-        new TabLayoutMediator(tabLayout, viewPager, strategy).attach();
+        new TabLayoutMediator(mTabLayout, mViewPager, strategy).attach();
 
         return view;
     }
@@ -93,7 +94,7 @@ public class CategoryListFragment extends Fragment {
         } else {
             mPagerAdapter.notifyDataSetChanged();
         }
-        viewPager.setAdapter(mPagerAdapter);
+        mViewPager.setAdapter(mPagerAdapter);
     }
 
 

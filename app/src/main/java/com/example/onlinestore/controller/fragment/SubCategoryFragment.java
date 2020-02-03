@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 public class SubCategoryFragment extends Fragment {
     private static final String TAG = "SubCategoryFragment";
 
-    @BindView(R.id.sub_category_recyclerView)
+    @BindView(R.id.sub_category_recyclerView_subcategory_fragment)
     RecyclerView mSubCategoryRecyclerView;
 
     private int mParentCategoryId;
@@ -129,10 +129,10 @@ public class SubCategoryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull SubCategoryViewHolder holder, int position) {
-            holder.SubCategoryTitle.setText(getLiveSubCategoryList().getValue().get(position).getName());
+            holder.mSubCategoryTitle.setText(getLiveSubCategoryList().getValue().get(position).getName());
             Picasso.get().load(getLiveSubCategoryList().getValue().get(position).getImage().getSrc()).placeholder
-                    (R.drawable.digikala_place_holder).into(holder.subCategoryImage);
-            holder.parentLayout.setOnClickListener(view -> {
+                    (R.drawable.digikala_place_holder).into(holder.mSubCategoryImage);
+            holder.mParentLayout.setOnClickListener(view -> {
                 //on Category clicked
                 startActivity(ProductListActivity
                         .newIntent(getActivity(),
@@ -148,11 +148,11 @@ public class SubCategoryFragment extends Fragment {
 
         class SubCategoryViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.sub_category_title)
-            TextView SubCategoryTitle;
+            TextView mSubCategoryTitle;
             @BindView(R.id.sub_category_img)
-            ImageView subCategoryImage;
+            ImageView mSubCategoryImage;
             @BindView(R.id.sub_category_relative)
-            RelativeLayout parentLayout;
+            RelativeLayout mParentLayout;
 
             SubCategoryViewHolder(@NonNull View itemView) {
                 super(itemView);

@@ -22,6 +22,7 @@ public class WoocommerceRepository {
     private static final String CONSUMER_KEY = "ck_552ea09e65326775023b1e8969bee5ab65a3be38";
     private static final String CONSUMER_SECRET = "cs_9d3a817430202486c59662290989d5b4c5c3c837";
     private static final int AMAZING_PRODUCT_TAG = 48;
+    public static final int SPECIAL_SALE_CATEGORY_ID = 119;
     private static WoocommerceRepository sWoocommerceRepository;
     private final String TAG = "WoocommerceRepository";
     //private List<ProductBody> mAllProducts;
@@ -108,7 +109,7 @@ public class WoocommerceRepository {
         Call<List<ProductBody>> call = mWoocommerceService.
                 getProductsOfSpecificCategory(CONSUMER_KEY,
                         CONSUMER_SECRET,
-                        119,
+                        SPECIAL_SALE_CATEGORY_ID,
                         25,
                         "date");
         mSpecialSaleList = call.execute().body();

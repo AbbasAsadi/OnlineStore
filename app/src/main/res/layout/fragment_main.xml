@@ -39,7 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/typeface_specialoffer"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_recyclerview" />
@@ -48,7 +48,7 @@
             android:id="@+id/timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:visibility="visible"
@@ -156,8 +156,8 @@
             android:id="@+id/card3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="7dp"
             android:visibility="visible"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -184,8 +184,8 @@
             android:id="@+id/card4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="2dp"
             android:visibility="visible"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -240,8 +240,8 @@
             android:id="@+id/card6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="7dp"
             android:visibility="visible"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -268,8 +268,8 @@
             android:id="@+id/card7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="2dp"
             android:visibility="visible"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -305,11 +305,11 @@
             app:layout_constraintTop_toBottomOf="@+id/card7" />
 
         <TextView
-            android:id="@+id/recentImage"
+            android:id="@+id/popular_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="@font/iran_sans"
             android:text="محبوبترین محصولات"
             android:textColor="#636e80"
@@ -319,10 +319,10 @@
             app:layout_constraintTop_toBottomOf="@id/img8" />
 
         <TextView
-            android:id="@+id/fullList_popular_product"
+            android:id="@+id/fullList_text_popular_product_main_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/iran_sans"
             android:text="لیست کامل"
@@ -332,52 +332,50 @@
             app:layout_constraintTop_toBottomOf="@id/img8" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_products_recyclerview"
+            android:id="@+id/popular_products_recyclerview_main_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layoutDirection="rtl"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recentImage" />
+            app:layout_constraintTop_toBottomOf="@id/popular_text" />
 
         <TextView
-            android:id="@+id/titleProductNew"
+            android:id="@+id/new_product_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:fontFamily="@font/iran_sans"
             android:text="جدیدترین محصولات"
             android:textColor="#636e80"
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview" />
+            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview_main_fragment" />
 
         <TextView
-            android:id="@+id/fullListNewProduct"
+            android:id="@+id/full_list_newest_product_text_main_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/iran_sans"
             android:text="لیست کامل"
             android:textColor="#0a7ab4"
             android:textSize="12.5dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview" />
+            app:layout_constraintTop_toBottomOf="@id/popular_products_recyclerview_main_fragment" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newest_products_recyclerview"
+            android:id="@+id/newest_products_recyclerview_main_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="8dp"
             android:layoutDirection="rtl"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleProductNew" />
+            app:layout_constraintTop_toBottomOf="@+id/new_product_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

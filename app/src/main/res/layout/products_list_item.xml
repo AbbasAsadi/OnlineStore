@@ -1,89 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/product_cardView"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product_cardView_product_list_item"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="4dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/product_img"
-        android:layout_margin="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_width="120dp"
-        android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/image_product_list_item"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp" />
 
         <TextView
-            android:textDirection="rtl"
-            android:id="@+id/title_product"
-            android:layout_marginEnd="8dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="48dp"
-            android:layout_toStartOf="@id/product_img"
-            android:text="@string/most_visiting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:maxLines="3"
-            android:textDirection="rtl"
-            android:id="@+id/short_description"
-            android:layout_marginTop="8dp"
-            android:text="@string/most_visiting"
-            android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@id/product_img"
-            android:layout_below="@id/title_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:layout_toStartOf="@id/product_img"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/short_description"
-            android:id="@+id/seperator"
-            android:src="@color/strokeCardView"
+            android:id="@+id/title_product_list_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" />
-        <ImageView
-            android:id="@+id/amazing_suggestion_label"
-            android:layout_alignBottom="@id/product_img"
-            android:layout_toStartOf="@id/product_img"
-            android:src="@drawable/amazing_suggestion_label"
-            android:layout_width="64dp"
-            android:layout_height="40dp"/>
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/image_product_list_item"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/most_visiting"
+            android:textColor="@color/black"
+            android:textDirection="rtl"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:textSize="12sp"
-            android:layout_margin="8dp"
-            android:gravity="bottom"
-            android:layout_above="@id/sale_price"
-            android:background="@drawable/red_line_shape"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/price_sample"
-            android:id="@+id/price_regular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/short_description_product_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_product_list_item"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/image_product_list_item"
+            android:maxLines="3"
+            android:text="@string/most_visiting"
+            android:textDirection="rtl" />
+
+        <ImageView
+            android:id="@+id/seperator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/short_description_product_list_item"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@id/image_product_list_item"
+            android:scaleType="fitXY"
+            android:src="@color/strokeCardView" />
+
+        <ImageView
+            android:id="@+id/amazing_suggestion_label_product_list_item"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@id/image_product_list_item"
+            android:layout_toStartOf="@id/image_product_list_item"
+            android:src="@drawable/amazing_suggestion_label" />
+
         <TextView
-            android:textSize="16sp"
+            android:id="@+id/price_regular_product_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/sale_price_product_list_item"
             android:layout_margin="8dp"
-            android:textColor="@color/priceColor"
+            android:background="@drawable/red_line_shape"
+            android:gravity="bottom"
             android:text="@string/price_sample"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/sale_price_product_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:id="@+id/sale_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_margin="8dp"
+            android:text="@string/price_sample"
+            android:textColor="@color/priceColor"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

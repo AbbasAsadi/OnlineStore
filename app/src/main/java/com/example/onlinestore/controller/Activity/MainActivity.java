@@ -20,9 +20,9 @@ import com.google.android.material.navigation.NavigationView;
 
 
 public class MainActivity extends SingleFragmentActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static long back_pressed;
+    private static long sBackPressed;
     private Toolbar mTopToolbar;
-    private DrawerLayout drawerLayout;
+    private DrawerLayout mDrawerLayout;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
@@ -62,12 +62,12 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     @Override
     public void onBackPressed() {
         // Handle back click to close menu
-        if (back_pressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
+        if (sBackPressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
         else
             Toast.makeText(getBaseContext(),
                     "برای خروج یکبار دیگر کلید بازگشت را بفشارید",
                     Toast.LENGTH_SHORT).show();
-        back_pressed = System.currentTimeMillis();
+        sBackPressed = System.currentTimeMillis();
     }
 
     @Override
@@ -107,14 +107,10 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
                 break;
         }
 
-        this.drawerLayout.closeDrawer(GravityCompat.START);
+        this.mDrawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }
-
-    // ---------------------
-    // CONFIGURATION
-    // ---------------------
 
     // Configure Toolbar
     private void configureToolBar() {
@@ -125,9 +121,9 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
     // Configure Drawer Layout
     private void configureDrawerLayout() {
-        this.drawerLayout = findViewById(R.id.activity_main_drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mTopToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
+        this.mDrawerLayout = findViewById(R.id.activity_main_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, mTopToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
 

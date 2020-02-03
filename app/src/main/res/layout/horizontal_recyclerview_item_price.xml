@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    android:id="@+id/horizontal_cardView"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:layout_margin="4dp"
-    app:strokeColor="@color/strokeCardView"
-    app:strokeWidth="0.5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/horizontal_cardView_product_horizontal_recyclerView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:focusable="true">
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    app:strokeColor="@color/strokeCardView"
+    app:strokeWidth="0.5dp">
 
     <RelativeLayout
         android:layout_width="150dp"
         android:layout_height="260dp">
 
         <ImageView
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:id="@+id/product_img_horizontal_recyclerView"
-            android:src="@color/colorPrimary"
+            android:id="@+id/image_product_horizontal_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@color/colorPrimary" />
+
         <TextView
+            android:id="@+id/title_product_horizontal_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_product_horizontal_recyclerView"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="2dp"
-            android:textSize="12sp"
-            android:textColor="@color/titleProduct"
-            android:id="@+id/title_product_horizontal_recyclerView"
-            android:maxLines="2"
             android:ellipsize="end"
             android:gravity="start"
-            android:layout_below="@+id/product_img_horizontal_recyclerView"
+            android:maxLines="2"
             android:text="@string/app_name"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/titleProduct"
+            android:textSize="12sp" />
+
         <ImageView
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_below="@id/title_product_horizontal_recyclerView"
             android:id="@+id/seperator"
-            android:src="@color/strokeCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" />
+            android:layout_below="@id/title_product_horizontal_recyclerView"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:scaleType="fitXY"
+            android:src="@color/strokeCardView" />
 
         <TextView
-            android:layout_below="@id/seperator"
-            android:id="@+id/price_regular"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/red_line_shape"
-            android:layout_marginStart="8dp"
-            android:textSize="13sp"
-            android:text="@string/app_name"
-            android:gravity="center_vertical"
-            android:layout_above="@id/sale_price"
+            android:id="@+id/price_regular_product_horizontal_recyclerView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@id/sale_price_product_horizontal_recyclerView"
+            android:layout_below="@id/seperator"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/red_line_shape"
+            android:gravity="center_vertical"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/sale_price_product_horizontal_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:id="@+id/sale_price"
-            android:textColor="@color/priceColor"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"
             android:gravity="start"
             android:text="@string/app_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/priceColor" />
 
     </RelativeLayout>
 

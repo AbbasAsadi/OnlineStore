@@ -51,53 +51,53 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         ProductBody productBody = mListProduct.get(position);
 
         Picasso.get().load(productBody.getImages().get(0).getSrc())
-                .placeholder(R.drawable.digikala_place_holder).into(holder.productImage);
+                .placeholder(R.drawable.digikala_place_holder).into(holder.mProductImage);
 
-        holder.titleProduct.setText(productBody.getName());
+        holder.mTitleProduct.setText(productBody.getName());
         if (!productBody.getShortDescription().isEmpty()) {
-            holder.shortDescription.setVisibility(View.VISIBLE);
+            holder.mShortDescription.setVisibility(View.VISIBLE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                holder.shortDescription
+                holder.mShortDescription
                         .setText(Html.fromHtml(mListProduct
                                 .get(position).getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
             } else {
-                holder.shortDescription
+                holder.mShortDescription
                         .setText(Html.fromHtml(productBody
                                 .getShortDescription()));
             }
-        } else holder.shortDescription.setVisibility(View.INVISIBLE);
+        } else holder.mShortDescription.setVisibility(View.INVISIBLE);
 
         if (!productBody.getRegularPrice()
                 .equals(productBody.getPrice())) {
-            holder.regularPrice.setVisibility(View.VISIBLE);
-            holder.amazingSuggestionLable.setVisibility(View.VISIBLE);
+            holder.mRegularPrice.setVisibility(View.VISIBLE);
+            holder.mAmazingSuggestionLable.setVisibility(View.VISIBLE);
         } else {
-            holder.regularPrice.setVisibility(View.INVISIBLE);
-            holder.amazingSuggestionLable.setVisibility(View.GONE);
+            holder.mRegularPrice.setVisibility(View.INVISIBLE);
+            holder.mAmazingSuggestionLable.setVisibility(View.GONE);
         }
 
-        holder.titleProduct.setText(productBody.getName());
+        holder.mTitleProduct.setText(productBody.getName());
         if (!productBody.getRegularPrice().equals("")) {
             String regularPrice = App.getInstance()
                     .getPersianNumber(Double
                             .parseDouble(productBody.getRegularPrice()))
                     + " تومان";
-            holder.regularPrice.setText(regularPrice);
-            holder.regularPrice.setVisibility(View.VISIBLE);
+            holder.mRegularPrice.setText(regularPrice);
+            holder.mRegularPrice.setVisibility(View.VISIBLE);
         } else {
-            holder.regularPrice.setText("");
-            holder.regularPrice.setVisibility(View.INVISIBLE);
+            holder.mRegularPrice.setText("");
+            holder.mRegularPrice.setVisibility(View.INVISIBLE);
         }
         if (!productBody.getPrice().equals("")) {
             String price = App.getInstance()
                     .getPersianNumber(Double.parseDouble(productBody.getPrice()))
                     + " تومان";
-            holder.salePrice.setText(price);
+            holder.mSalePrice.setText(price);
         } else {
-            holder.regularPrice.setVisibility(View.INVISIBLE);
+            holder.mRegularPrice.setVisibility(View.INVISIBLE);
         }
         if (!mListProduct.get(position).getName().equals("تخفیفات")) {
-            holder.productCardView.setOnClickListener(view ->
+            holder.mProductCardView.setOnClickListener(view ->
                     mContext.startActivity(DetailProductActivity
                             .newIntent(mContext, mListProduct.get(position).getId())));
         }
@@ -110,21 +110,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return mListProduct.size();
     }
 
-    public class ProductViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title_product)
-        public TextView titleProduct;
-        @BindView(R.id.product_img)
-        public ImageView productImage;
-        @BindView(R.id.short_description)
-        TextView shortDescription;
-        @BindView(R.id.price_regular)
-        TextView regularPrice;
-        @BindView(R.id.sale_price)
-        TextView salePrice;
-        @BindView(R.id.amazing_suggestion_label)
-        ImageView amazingSuggestionLable;
-        @BindView(R.id.product_cardView)
-        CardView productCardView;
+    class ProductViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.title_product_list_item)
+        TextView mTitleProduct;
+        @BindView(R.id.image_product_list_item)
+        ImageView mProductImage;
+        @BindView(R.id.short_description_product_list_item)
+        TextView mShortDescription;
+        @BindView(R.id.price_regular_product_list_item)
+        TextView mRegularPrice;
+        @BindView(R.id.sale_price_product_list_item)
+        TextView mSalePrice;
+        @BindView(R.id.amazing_suggestion_label_product_list_item)
+        ImageView mAmazingSuggestionLable;
+        @BindView(R.id.product_cardView_product_list_item)
+        CardView mProductCardView;
 
         ProductViewHolder(@NonNull View itemView) {
             super(itemView);

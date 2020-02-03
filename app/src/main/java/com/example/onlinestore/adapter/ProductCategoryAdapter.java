@@ -39,8 +39,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
 
     @Override
     public void onBindViewHolder(@NonNull categoryViewHolder holder, int position) {
-        holder.titleCategory.setText(mListCategories.get(position).getName());
-        holder.parentCardView.setOnClickListener(view ->
+        holder.mTitleCategory.setText(mListCategories.get(position).getName());
+        holder.mParentCardView.setOnClickListener(view ->
                 mContext.startActivity(ProductListActivity
                         .newIntent(mContext, mListCategories.get(position).getId())));
     }
@@ -57,9 +57,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<ProductCategory
 
     class categoryViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.title_category_horizontal_recyclerView_white)
-        TextView titleCategory;
+        TextView mTitleCategory;
         @BindView(R.id.category_cardView_white)
-        CardView parentCardView;
+        CardView mParentCardView;
 
         categoryViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -36,14 +36,14 @@ public class MainFragment extends Fragment {
     RecyclerView mRecyclerViewCategory;
     @BindView(R.id.amzing_recycleview)
     RecyclerView mRecyclerViewAmazingSuggest;
-    @BindView(R.id.newest_products_recyclerview)
+    @BindView(R.id.newest_products_recyclerview_main_fragment)
     RecyclerView mRecyclerViewNewestProduct;
-    @BindView(R.id.popular_products_recyclerview)
+    @BindView(R.id.popular_products_recyclerview_main_fragment)
     RecyclerView mRecyclerViewPopularProduct;
-    @BindView(R.id.fullList_popular_product)
+    @BindView(R.id.fullList_text_popular_product_main_fragment)
     TextView mFullListTopRated;
-    @BindView(R.id.fullListNewProduct)
-    TextView mFullListNewes;
+    @BindView(R.id.full_list_newest_product_text_main_fragment)
+    TextView mFullListNewest;
     //    @BindView(R.id.)
 //    private RecyclerView mRecyclerViewTopRatedProduct;
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
@@ -109,7 +109,7 @@ public class MainFragment extends Fragment {
                 mContext.startActivity(ProductListActivity
                         .newIntent(mContext, ProductListActivity.TOP_RATED_PRODUCT)));
 
-        mFullListNewes.setOnClickListener(view2 ->
+        mFullListNewest.setOnClickListener(view2 ->
                 mContext.startActivity(ProductListActivity
                         .newIntent(mContext, ProductListActivity.NEWEST_PRODUCT)));
 

@@ -42,8 +42,8 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
-        holder.titleCategory.setText(mCategoryList.get(position).getName());
-        holder.parentCardView.setOnClickListener(view ->
+        holder.mTitleCategory.setText(mCategoryList.get(position).getName());
+        holder.mParentCardView.setOnClickListener(view ->
                 mContext.startActivity(CategoryListActivity.newIntent(mContext, position)));
     }
 
@@ -53,10 +53,10 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
     }
 
     class CategoryHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title_category_horizontal_recyclerView)
-        TextView titleCategory;
-        @BindView(R.id.category_cardView)
-        CardView parentCardView;
+        @BindView(R.id.title_category_horizontal_recyclerView_green)
+        TextView mTitleCategory;
+        @BindView(R.id.category_cardView_green)
+        CardView mParentCardView;
 
         CategoryHolder(@NonNull View itemView) {
             super(itemView);

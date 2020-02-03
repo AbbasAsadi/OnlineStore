@@ -48,48 +48,46 @@ import ss.com.bannerslider.viewholder.ImageSlideViewHolder;
 public class DetailProductFragment extends Fragment {
     private static final String TAG = "DetailProductFragment";
     private static final int DISCOUNT_TAG = 46;
-    @BindView(R.id.toolbar_detail_product)
-    TextView toolbar_detail_product;
-    @BindView(R.id.basket_img)
-    ImageView basketImg;
-    @BindView(R.id.slider_detail_product)
+
+    @BindView(R.id.basket_img_detail_product_fragment)
+    ImageView mBasketImg;
+    @BindView(R.id.slider_detail_product_fragment)
     Slider mSlider;
-    @BindView(R.id.amazing_suggestion_label_detail_product)
-    ImageView amazingSuggestionLabel;
-    @BindView(R.id.amazing_suggestion_logo)
-    ImageView amazingSuggestionLogo;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.parent_fragment_product)
-    RelativeLayout parentFragmentProduct;
-    @BindView(R.id.title_product)
-    TextView titleProduct;
-    @BindView(R.id.short_description)
-    TextView shortDescriptionProduct;
-    @BindView(R.id.description_txt)
-    TextView descriptionProduct;
-    @BindView(R.id.price_regular)
-    TextView regularPrice;
-    @BindView(R.id.sale_price)
-    TextView salePrice;
-    @BindView(R.id.category_product_fragment_recyclerView)
-    RecyclerView categoryProductRecyclerView;
-    @BindView(R.id.related_product_recyclerView)
-    RecyclerView relatedProductRecyclerView;
-    @BindView(R.id.add_to_basket)
-    LinearLayout addToBasket;
-    @BindView(R.id.basket_badge)
-    TextView basketBadge;
-    @BindView(R.id.share_product)
-    ImageView shareProduct;
-    @BindView(R.id.favorite_product)
-    ImageView favoriteProduct;
-    @BindView(R.id.user_comments)
-    RelativeLayout userComments;
-    @BindView(R.id.related_product_txt)
-    TextView relatedProductTxt;
-    @BindView(R.id.description_card)
-    MaterialCardView descriptionCardView;
+    @BindView(R.id.amazing_suggestion_label_detail_product_fragment)
+    ImageView mAmazingSuggestionLabel;
+    @BindView(R.id.amazing_suggestion_logo_detail_product_fragment)
+    ImageView mAmazingSuggestionLogo;
+    @BindView(R.id.progress_bar_detail_product_fragment)
+    ProgressBar mProgressBar;
+    @BindView(R.id.parent_relativelayout_detail_product_fragment)
+    RelativeLayout mParentFragmentProduct;
+    @BindView(R.id.title_product_detail_product_fragment)
+    TextView mTitleProduct;
+    @BindView(R.id.short_description_detail_product_fragment)
+    TextView mShortDescriptionProduct;
+    @BindView(R.id.description_text_detail_product_fragment)
+    TextView mDescriptionProduct;
+    @BindView(R.id.price_regular_detail_product_fragment)
+    TextView mRegularPrice;
+    @BindView(R.id.sale_price_detail_product_fragment)
+    TextView mSalePrice;
+    @BindView(R.id.category_product_recyclerView_detail_product_fragment)
+    RecyclerView mCategoryProductRecyclerView;
+    @BindView(R.id.related_product_recyclerView_detail_product_fragment)
+    RecyclerView mRelatedProductRecyclerView;
+    @BindView(R.id.add_to_basket_detail_product_fragment)
+    LinearLayout mAddToBasket;
+    @BindView(R.id.basket_badge_detail_product_fragment)
+    TextView mBasketBadge;
+    @BindView(R.id.share_product_detail_product_fragment)
+    ImageView mShareProduct;
+    @BindView(R.id.favorite_product_detail_product_fragment)
+    ImageView mFavoriteProduct;
+    @BindView(R.id.user_comments_relativelayout_detail_product_fragment)
+    RelativeLayout mUserComments;
+    @BindView(R.id.description_cardview_detail_product_fragment)
+    MaterialCardView mDescriptionCardView;
+
     private int mProductId;
     private WoocommerceRepository mRepository;
     private ProductCategoryAdapter mCategoryAdapter;
@@ -149,8 +147,8 @@ public class DetailProductFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         GetProductAsync async = new GetProductAsync();
         async.execute();
-        progressBar.setVisibility(View.VISIBLE);
-        parentFragmentProduct.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mParentFragmentProduct.setVisibility(View.GONE);
         Observer<ProductBody> productObserver = productBody -> {
             if (getLiveProduct().getValue() != null) {
 
@@ -158,7 +156,7 @@ public class DetailProductFragment extends Fragment {
 
                 //Toast.makeText(getActivity(), "id:" + getLiveProduct().getValue().getId(), Toast.LENGTH_SHORT).show();
 
-                titleProduct.setText(getLiveProduct().getValue().getName());
+                mTitleProduct.setText(getLiveProduct().getValue().getName());
 
                 setAmazingSuggestionStatus();
 
@@ -168,13 +166,13 @@ public class DetailProductFragment extends Fragment {
 
                 setShortDescription();
 
-                categoryProductRecyclerView
+                mCategoryProductRecyclerView
                         .setLayoutManager(new LinearLayoutManager
                                 (getActivity(), RecyclerView.HORIZONTAL, true));
                 updateCategoryAdapter();
 
 
-                relatedProductRecyclerView
+                mRelatedProductRecyclerView
                         .setLayoutManager(new LinearLayoutManager(
                                 getActivity(), RecyclerView.HORIZONTAL, true));
 
@@ -197,7 +195,7 @@ public class DetailProductFragment extends Fragment {
             String shareMessage = getLiveProduct().getValue().getName() + "\n" +
                     "را در " + getString(R.string.digikala_txt) + " ببین" + "\n" +
                     getLiveProduct().getValue().getPermalink();
-            shareProduct.setOnClickListener(view -> {
+            mShareProduct.setOnClickListener(view -> {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_TEXT, shareMessage);
@@ -209,7 +207,7 @@ public class DetailProductFragment extends Fragment {
     }
 
     private void handleClickOnCommentButton() {
-        userComments.setOnClickListener(view1 ->
+        mUserComments.setOnClickListener(view1 ->
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.detail_product_Activity, CommentFragment.newInstance(mProductId))
                         .addToBackStack(null)
@@ -220,14 +218,14 @@ public class DetailProductFragment extends Fragment {
     private void setShortDescription() {
         if (getLiveProduct().getValue() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                if (shortDescriptionProduct != null) {
-                    shortDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
+                if (mShortDescriptionProduct != null) {
+                    mShortDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getShortDescription(), Html.FROM_HTML_MODE_COMPACT));
                 }
-                descriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getDescription(), Html.FROM_HTML_MODE_COMPACT));
+                mDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getDescription(), Html.FROM_HTML_MODE_COMPACT));
             } else {
-                if (shortDescriptionProduct != null)
-                    shortDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getShortDescription()));
-                descriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getDescription()));
+                if (mShortDescriptionProduct != null)
+                    mShortDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getShortDescription()));
+                mDescriptionProduct.setText(Html.fromHtml(getLiveProduct().getValue().getDescription()));
             }
         }
     }
@@ -237,7 +235,7 @@ public class DetailProductFragment extends Fragment {
             String price = App.getInstance()
                     .getPersianNumber(Double.parseDouble(getLiveProduct().getValue().getPrice()))
                     + " تومان";
-            salePrice.setText(price);
+            mSalePrice.setText(price);
         }
     }
 
@@ -249,11 +247,11 @@ public class DetailProductFragment extends Fragment {
                                 .parseDouble(getLiveProduct().getValue().getRegularPrice()))
                         + " تومان";
 
-                regularPrice.setText(regularPriceStr);
-                regularPrice.setVisibility(View.VISIBLE);
+                mRegularPrice.setText(regularPriceStr);
+                mRegularPrice.setVisibility(View.VISIBLE);
             } else {
-                regularPrice.setVisibility(View.INVISIBLE);
-                regularPrice.setText("");
+                mRegularPrice.setVisibility(View.INVISIBLE);
+                mRegularPrice.setText("");
             }
         }
     }
@@ -267,7 +265,7 @@ public class DetailProductFragment extends Fragment {
             mRelatedProductAdapter.setListProduct(getLiveRelatedProduct().getValue());
             mRelatedProductAdapter.notifyDataSetChanged();
         }
-        relatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
+        mRelatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
 
     }
 
@@ -280,7 +278,7 @@ public class DetailProductFragment extends Fragment {
                 mCategoryAdapter.setListCategories(getLiveProduct().getValue().getCategories());
                 mCategoryAdapter.notifyDataSetChanged();
             }
-            categoryProductRecyclerView
+            mCategoryProductRecyclerView
                     .setAdapter(mCategoryAdapter);
         }
     }
@@ -289,8 +287,8 @@ public class DetailProductFragment extends Fragment {
         if (getLiveProduct().getValue() != null) {
             if (!getLiveProduct().getValue().getTags().isEmpty()) {
                 if (getLiveProduct().getValue().getTags().get(0).getId() == DISCOUNT_TAG) {
-                    amazingSuggestionLabel.setVisibility(View.VISIBLE);
-                    amazingSuggestionLogo.setVisibility(View.VISIBLE);
+                    mAmazingSuggestionLabel.setVisibility(View.VISIBLE);
+                    mAmazingSuggestionLogo.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -308,7 +306,7 @@ public class DetailProductFragment extends Fragment {
                 public void onBindImageSlide(int position, ImageSlideViewHolder imageSlideViewHolder) {
                     imageSlideViewHolder.bindImageSlide(getLiveProduct().getValue().getImages().get(position).getSrc());
                     imageSlideViewHolder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    progressBar.setVisibility(View.GONE);
+                    mProgressBar.setVisibility(View.GONE);
 
                 }
             });
@@ -346,8 +344,8 @@ public class DetailProductFragment extends Fragment {
             super.onPostExecute(aVoid);
             getLiveRelatedProduct().setValue(relatedProduct);
             getLiveProduct().setValue(mProduct);
-            progressBar.setVisibility(View.GONE);
-            parentFragmentProduct.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
+            mParentFragmentProduct.setVisibility(View.VISIBLE);
         }
     }
 }

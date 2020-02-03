@@ -38,26 +38,27 @@ import butterknife.OnClick;
  */
 public class ProductListFragment extends Fragment {
     private static final String TAG = "ProductListFragment";
-    @BindView(R.id.title_toolbar)
-    TextView titleToolbar;
-    @BindView(R.id.basket_badge)
-    TextView basketBadge;
-    @BindView(R.id.products_list_recyclerView)
-    RecyclerView productsListRecyclerView;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.empty_list)
-    TextView emptyList;
-    @BindView(R.id.basket_img)
-    ImageView basketImg;
-    @BindView(R.id.search_img)
-    ImageView searchImg;
-    @BindView(R.id.sort_relative)
-    RelativeLayout sortRelative;
-    @BindView(R.id.sub_sort_txt)
-    TextView subSortTxt;
-    @BindView(R.id.filter_relative)
-    RelativeLayout filterRelative;
+    @BindView(R.id.toolbar_product_list_fragment)
+    TextView mTitleToolbar;
+    @BindView(R.id.basket_badge_product_list_fragment)
+    TextView mBasketBadge;
+    @BindView(R.id.products_list_recyclerView_product_list_fragment)
+    RecyclerView mProductsListRecyclerView;
+    @BindView(R.id.progress_bar_product_list_fragment)
+    ProgressBar mProgressBar;
+    @BindView(R.id.empty_list_text_product_list_fragment)
+    TextView mEmptyListText;
+    @BindView(R.id.basket_img_product_list_fragment)
+    ImageView mBasketImg;
+    @BindView(R.id.search_img_product_list_fragment)
+    ImageView mSearchImg;
+    @BindView(R.id.sort_relativelayout_product_list_fragment)
+    RelativeLayout mSortRelativeLayout;
+    @BindView(R.id.sub_sort_text_product_list_fragment)
+    TextView mSubSortText;
+    @BindView(R.id.filter_relativelayout_product_list_fragment)
+    RelativeLayout mFilterRelativeLayout;
+
     private int mCategoryId = -1;
     private MutableLiveData<List<ProductBody>> mLiveProductList;
     private List<ProductBody> mProducts;
@@ -122,8 +123,8 @@ public class ProductListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
         ButterKnife.bind(this, view);
-        productsListRecyclerView.setVisibility(View.GONE);
-        productsListRecyclerView.setLayoutManager(new
+        mProductsListRecyclerView.setVisibility(View.GONE);
+        mProductsListRecyclerView.setLayoutManager(new
                 LinearLayoutManager(getActivity(),
                 RecyclerView.VERTICAL,
                 false));
@@ -131,8 +132,8 @@ public class ProductListFragment extends Fragment {
         Observer<List<ProductBody>> observer = productBodies -> {
             if (getLiveProductList().getValue() == null ||
                     getLiveProductList().getValue().isEmpty()) {
-                emptyList.setVisibility(View.VISIBLE);
-                productsListRecyclerView.setVisibility(View.GONE);
+                mEmptyListText.setVisibility(View.VISIBLE);
+                mProductsListRecyclerView.setVisibility(View.GONE);
             } else {
                 updateProductAdapter();
             }
@@ -162,7 +163,7 @@ public class ProductListFragment extends Fragment {
             mProductAdapter.setListProduct(getLiveProductList().getValue());
             mProductAdapter.notifyDataSetChanged();
         }
-        productsListRecyclerView.setAdapter(mProductAdapter);
+        mProductsListRecyclerView.setAdapter(mProductAdapter);
     }
 
 
@@ -201,14 +202,14 @@ public class ProductListFragment extends Fragment {
             super.onPostExecute(aVoid);
             mCategoryId = -1;
             mListType = "empty";
-            progressBar.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
             getLiveProductList().setValue(mProducts);
             if (mProducts == null || mProducts.isEmpty()) {
-                emptyList.setVisibility(View.VISIBLE);
-                productsListRecyclerView.setVisibility(View.GONE);
+                mEmptyListText.setVisibility(View.VISIBLE);
+                mProductsListRecyclerView.setVisibility(View.GONE);
             } else {
-                productsListRecyclerView.setVisibility(View.VISIBLE);
-                emptyList.setVisibility(View.GONE);
+                mProductsListRecyclerView.setVisibility(View.VISIBLE);
+                mEmptyListText.setVisibility(View.GONE);
             }
         }
     }

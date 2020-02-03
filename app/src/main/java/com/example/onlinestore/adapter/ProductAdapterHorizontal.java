@@ -49,17 +49,17 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
         if (productBody.getPrice().equals(""))
             mListProduct.remove(position);
         if (productBody.getImages().isEmpty()) {
-            holder.productImage.setImageResource(R.drawable.digikala_place_holder);
+            holder.mProductImage.setImageResource(R.drawable.digikala_place_holder);
         } else {
             Picasso.get().load(productBody.getImages().get(0).getSrc())
                     .placeholder(R.drawable.digikala_place_holder)
-                    .into(holder.productImage);
+                    .into(holder.mProductImage);
         }
         if (!productBody.getRegularPrice().equals(productBody.getPrice())) {
-            holder.priceRegular.setVisibility(View.VISIBLE);
-        } else holder.priceRegular.setVisibility(View.GONE);
+            holder.mPriceRegular.setVisibility(View.VISIBLE);
+        } else holder.mPriceRegular.setVisibility(View.GONE);
 
-        holder.titleProduct.setText(productBody.getName());
+        holder.mTitleProduct.setText(productBody.getName());
 
 
         if (!productBody.getRegularPrice().equals("")) {
@@ -67,22 +67,22 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
                     .getPersianNumber(Double.parseDouble(productBody.getRegularPrice()))
                     + " تومان";
 
-            holder.priceRegular.setText(regularPrice);
+            holder.mPriceRegular.setText(regularPrice);
         } else {
-            holder.priceRegular.setVisibility(View.INVISIBLE);
+            holder.mPriceRegular.setVisibility(View.INVISIBLE);
         }
 
         if (!productBody.getPrice().equals("")) {
             String price = App.getInstance()
                     .getPersianNumber(Double.parseDouble(productBody.getPrice()))
                     + " تومان";
-            holder.salePrice.setText(price);
+            holder.mSalePrice.setText(price);
         } else {
-            holder.salePrice.setVisibility(View.INVISIBLE);
+            holder.mSalePrice.setVisibility(View.INVISIBLE);
         }
 
         if (!mListProduct.get(position).getName().equals("تخفیفات")) {
-            holder.horizontalCardView.setOnClickListener(view -> {
+            holder.mHorizontalCardView.setOnClickListener(view -> {
                 Toast.makeText(mContext,
                         "clickedId" + mListProduct.get(position).getId(),
                         Toast.LENGTH_SHORT).show();
@@ -100,16 +100,16 @@ public class ProductAdapterHorizontal extends RecyclerView.Adapter<ProductAdapte
     }
 
     class HorizontalProductViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.product_img_horizontal_recyclerView)
-        ImageView productImage;
+        @BindView(R.id.image_product_horizontal_recyclerView)
+        ImageView mProductImage;
         @BindView(R.id.title_product_horizontal_recyclerView)
-        TextView titleProduct;
-        @BindView(R.id.price_regular)
-        TextView priceRegular;
-        @BindView(R.id.sale_price)
-        TextView salePrice;
-        @BindView(R.id.horizontal_cardView)
-        MaterialCardView horizontalCardView;
+        TextView mTitleProduct;
+        @BindView(R.id.price_regular_product_horizontal_recyclerView)
+        TextView mPriceRegular;
+        @BindView(R.id.sale_price_product_horizontal_recyclerView)
+        TextView mSalePrice;
+        @BindView(R.id.horizontal_cardView_product_horizontal_recyclerView)
+        MaterialCardView mHorizontalCardView;
 
         HorizontalProductViewHolder(@NonNull View itemView) {
             super(itemView);

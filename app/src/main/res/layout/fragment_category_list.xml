@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".controller.fragment.CategoryListFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_category_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp"
         tools:targetApi="lollipop">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:padding="8dp"
-                android:clickable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_margin="8dp"
                 android:id="@+id/back_toolbar"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="8dp"
+                app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 
 
             <TextView
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:textSize="16sp"
                 android:id="@+id/title_product_toolbar"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:text="@string/product_category"
-                android:layout_toStartOf="@+id/back_toolbar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/back_toolbar"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/product_category"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
-        app:tabMode="scrollable"
-        android:layoutDirection="rtl"
-        android:elevation="4dp"
-        app:tabIndicatorColor="@color/white"
-        app:tabTextColor="@color/white"
-        android:id="@+id/tab_layout"
+        android:id="@+id/tab_layout_category_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/toolbar_category_list_fragment"
         android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:layoutDirection="rtl"
+        app:tabIndicatorColor="@color/white"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/white"
         tools:targetApi="lollipop" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:layoutDirection="rtl"
-        android:id="@+id/viewPager"
-        android:layout_below="@id/tab_layout"
+        android:id="@+id/viewPager_category_list_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout_category_list_fragment"
+        android:layoutDirection="rtl" />
 
 </RelativeLayout>

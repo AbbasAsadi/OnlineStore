@@ -40,16 +40,17 @@ import butterknife.OnClick;
  */
 public class CommentFragment extends Fragment {
     private static final String TAG = "CommentFragment";
-    @BindView(R.id.comments_recyclerView)
-    RecyclerView commentRecyclerView;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.empty_comment)
-    TextView emptyComment;
-    @BindView(R.id.parent_relative)
-    RelativeLayout parentRelative;
-    @BindView(R.id.add_comment_fab)
-    FloatingActionButton addCommentFab;
+    @BindView(R.id.comments_recyclerView_comment_fragment)
+    RecyclerView mCommentRecyclerView;
+    @BindView(R.id.progress_bar_comment_fragment)
+    ProgressBar mProgressBar;
+    @BindView(R.id.empty_comment_text_comment_fragment)
+    TextView mEmptyCommentText;
+    @BindView(R.id.mParent_relativelayout_comment_fragment)
+    RelativeLayout mParentRelativeLayout;
+    @BindView(R.id.add_comment_fab_comment_fragment)
+    FloatingActionButton mAddCommentFab;
+
     private CommentAdapter mCommentAdapter;
     private int mProductId;
     private List<CommentBody> mCommentList;
@@ -99,8 +100,8 @@ public class CommentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comment, container, false);
         ButterKnife.bind(this, view);
-        commentRecyclerView.setVisibility(View.GONE);
-        commentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        mCommentRecyclerView.setVisibility(View.GONE);
+        mCommentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 
         Observer<List<CommentBody>> observer = commentBodies -> {
             updateCommentAdapter();
@@ -122,7 +123,7 @@ public class CommentFragment extends Fragment {
             mCommentAdapter.setCommentList(getLiveCommentList().getValue());
             mCommentAdapter.notifyDataSetChanged();
         }
-        commentRecyclerView.setAdapter(mCommentAdapter);
+        mCommentRecyclerView.setAdapter(mCommentAdapter);
     }
 
     @Override
@@ -151,17 +152,17 @@ public class CommentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-            holder.nameReviewer.setText(mCommentList.get(position).getReviewer());
-            holder.dateReview.setText(mCommentList.get(position).getDateCreated());
+            holder.mNameReviewer.setText(mCommentList.get(position).getReviewer());
+            holder.mDateReview.setText(mCommentList.get(position).getDateCreated());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                holder.review.setText(Html.fromHtml(mCommentList.get(position).getReview(), Html.FROM_HTML_MODE_COMPACT));
+                holder.mReviewText.setText(Html.fromHtml(mCommentList.get(position).getReview(), Html.FROM_HTML_MODE_COMPACT));
             } else {
-                holder.review.setText(Html.fromHtml(mCommentList.get(position).getReview()));
+                holder.mReviewText.setText(Html.fromHtml(mCommentList.get(position).getReview()));
             }
             String ratingCommentTxt = "امتیاز: " + mCommentList.get(position).getRating() + " از 5";
-            holder.ratingComment.setText(ratingCommentTxt);
-            holder.editComment.setVisibility(View.GONE);
-            holder.deleteComment.setVisibility(View.GONE);
+            holder.mRatingComment.setText(ratingCommentTxt);
+            holder.mEditComment.setVisibility(View.GONE);
+            holder.mDeleteComment.setVisibility(View.GONE);
 
         }
 
@@ -172,17 +173,17 @@ public class CommentFragment extends Fragment {
 
         class CommentViewHolder extends RecyclerView.ViewHolder {
             @BindView(R.id.name_reviewer)
-            TextView nameReviewer;
+            TextView mNameReviewer;
             @BindView(R.id.date_review)
-            TextView dateReview;
+            TextView mDateReview;
             @BindView(R.id.review_txt)
-            TextView review;
+            TextView mReviewText;
             @BindView(R.id.rating_comment)
-            TextView ratingComment;
+            TextView mRatingComment;
             @BindView(R.id.edit_comment)
-            ImageView editComment;
+            ImageView mEditComment;
             @BindView(R.id.delete_comment)
-            ImageView deleteComment;
+            ImageView mDeleteComment;
 
             CommentViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -209,14 +210,14 @@ public class CommentFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
             getLiveCommentList().setValue(mCommentList);
             if (mCommentList == null || mCommentList.isEmpty()) {
-                emptyComment.setVisibility(View.VISIBLE);
-                parentRelative.setVisibility(View.GONE);
+                mEmptyCommentText.setVisibility(View.VISIBLE);
+                mParentRelativeLayout.setVisibility(View.GONE);
             } else {
-                commentRecyclerView.setVisibility(View.VISIBLE);
-                parentRelative.setVisibility(View.VISIBLE);
+                mCommentRecyclerView.setVisibility(View.VISIBLE);
+                mParentRelativeLayout.setVisibility(View.VISIBLE);
             }
 
 

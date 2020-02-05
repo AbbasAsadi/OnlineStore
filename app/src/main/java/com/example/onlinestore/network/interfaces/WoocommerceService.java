@@ -25,6 +25,13 @@ public interface WoocommerceService {
                                               @Query("orderby") String orderBy);
 
     @GET("products")
+    Call<List<ProductBody>> getSortedProductList(@Query("consumer_key") String consumerKey,
+                                                 @Query("consumer_secret") String consumerSecret,
+                                                 @Query("per_page") int perPage,
+                                                 @Query("orderby") String orderBy,
+                                                 @Query("order") String order);
+
+    @GET("products")
     Call<List<ProductBody>> getProductsOfSpecificCategory(
             @Query("consumer_key") String consumerKey,
             @Query("consumer_secret") String consumerSecret,

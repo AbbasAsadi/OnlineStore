@@ -27,6 +27,7 @@ import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.ProductAdapterHorizontal;
 import com.example.onlinestore.adapter.ProductCategoryAdapter;
 import com.example.onlinestore.model.products.ProductBody;
+import com.example.onlinestore.model.products.ShoppingBasketProduct;
 import com.example.onlinestore.repository.WoocommerceRepository;
 import com.example.onlinestore.utils.sliderr.PicassoImageLoadingService;
 import com.google.android.material.card.MaterialCardView;
@@ -179,6 +180,24 @@ public class DetailProductFragment extends Fragment {
                 handleClickOnCommentButton();
 
                 handleShareProductLink();
+
+                handleAddToShoppingBasket();
+
+                handleClickOnShoppingBasket();
+
+                String badge = App
+                        .getInstance()
+                        .getPersianNumber(WoocommerceRepository
+                                .getInstance()
+                                .getBadgeNumber()) + " تومان";
+                mBasketBadge.setText(badge);
+
+                mBasketImg.setOnClickListener(view ->
+                        getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.detail_product_Activity, ShoppingBasketFragment.newInstance())
+                                .addToBackStack(null)
+                                .commit());
             }
         };
         getLiveProduct().observe(this, productObserver);
@@ -188,6 +207,32 @@ public class DetailProductFragment extends Fragment {
 
         getLiveRelatedProduct().observe(this, relatedProductListObserver);
         return rootView;
+    }
+
+    private void handleClickOnShoppingBasket() {
+        mBasketImg.setOnClickListener(view ->
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.detail_product_Activity, ShoppingBasketFragment.newInstance())
+                        .commit());
+    }
+
+    private void handleAddToShoppingBasket() {
+        mAddToBasket.setOnClickListener(view -> {
+            ShoppingBasketProduct basketProduct = new ShoppingBasketProduct(mProduct.getId(),
+                    1,
+                    mProduct.getName(),
+                    mProduct.getShortDescription(),
+                    mProduct.getImages().get(0).getSrc(),
+                    mProduct.getRegularPrice(),
+                    mProduct.getPrice());
+            mRepository.insertProductInShoppingBasket(basketProduct);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_product_Activity, ShoppingBasketFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
     }
 
     private void handleShareProductLink() {

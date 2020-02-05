@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.onlinestore.App;
 import com.example.onlinestore.R;
 import com.example.onlinestore.adapter.ProductAdapter;
 import com.example.onlinestore.controller.Activity.ProductListActivity;
@@ -38,6 +39,7 @@ import butterknife.OnClick;
  */
 public class ProductListFragment extends Fragment {
     private static final String TAG = "ProductListFragment";
+    private static MutableLiveData<List<ProductBody>> mLiveProductList;
     @BindView(R.id.toolbar_product_list_fragment)
     TextView mTitleToolbar;
     @BindView(R.id.basket_badge_product_list_fragment)
@@ -58,12 +60,12 @@ public class ProductListFragment extends Fragment {
     TextView mSubSortText;
     @BindView(R.id.filter_relativelayout_product_list_fragment)
     RelativeLayout mFilterRelativeLayout;
-
     private int mCategoryId = -1;
-    private MutableLiveData<List<ProductBody>> mLiveProductList;
     private List<ProductBody> mProducts;
     private ProductAdapter mProductAdapter;
     private String mListType = "empty";
+
+
     public ProductListFragment() {
         // Required empty public constructor
     }
@@ -95,16 +97,16 @@ public class ProductListFragment extends Fragment {
         return fragment;
     }
 
-    @OnClick(R.id.back_toolbar_product_list)
-    void onBackClick() {
-        getActivity().finish();
-    }
-
-    private MutableLiveData<List<ProductBody>> getLiveProductList() {
+    static MutableLiveData<List<ProductBody>> getLiveProductList() {
         if (mLiveProductList == null) {
             mLiveProductList = new MutableLiveData<>();
         }
         return mLiveProductList;
+    }
+
+    @OnClick(R.id.back_toolbar_product_list)
+    void onBackClick() {
+        getActivity().finish();
     }
 
     @Override
@@ -123,11 +125,23 @@ public class ProductListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
         ButterKnife.bind(this, view);
+
+        SortProductDialogFragment.radioChecked = 4;
+        sortProductDialog();
+        //subSortTextFunction();
+
+        String badge = App
+                .getInstance()
+                .getPersianNumber(WoocommerceRepository.getInstance().getBadgeNumber())
+                + " تومان";
+        mBasketBadge.setText(badge);
+
         mProductsListRecyclerView.setVisibility(View.GONE);
         mProductsListRecyclerView.setLayoutManager(new
                 LinearLayoutManager(getActivity(),
                 RecyclerView.VERTICAL,
                 false));
+        setSortText();
 
         Observer<List<ProductBody>> observer = productBodies -> {
             if (getLiveProductList().getValue() == null ||
@@ -135,15 +149,46 @@ public class ProductListFragment extends Fragment {
                 mEmptyListText.setVisibility(View.VISIBLE);
                 mProductsListRecyclerView.setVisibility(View.GONE);
             } else {
+                setSortText();
                 updateProductAdapter();
             }
 
         };
         getLiveProductList().observe(this, observer);
         Log.d(TAG, "onCreateView: mProducts.size:" + mProducts.size());
-        //updateProductAdapter();
 
+        mBasketImg.setOnClickListener(view1 ->
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.product_list_activity, ShoppingBasketFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit());
         return view;
+    }
+
+    private void setSortText() {
+        switch (SortProductDialogFragment.radioChecked) {
+            case 0:
+                mSubSortText
+                        .setText(getResources().getString(R.string.price_asc));
+                break;
+            case 1:
+                mSubSortText
+                        .setText(getResources().getString(R.string.price_desc));
+                break;
+            case 2:
+                mSubSortText
+                        .setText(getResources().getString(R.string.most_visiting));
+                break;
+            case 3:
+                mSubSortText
+                        .setText(getResources().getString(R.string.most_rating));
+                break;
+            case 4:
+                mSubSortText
+                        .setText(getResources().getString(R.string.most_newest));
+                break;
+        }
     }
 
     @Override
@@ -166,6 +211,11 @@ public class ProductListFragment extends Fragment {
         mProductsListRecyclerView.setAdapter(mProductAdapter);
     }
 
+    private void sortProductDialog() {
+        mSortRelativeLayout.setOnClickListener(view ->
+                SortProductDialogFragment.newInstance()
+                        .show(getFragmentManager(), "sortProduct"));
+    }
 
     class getOrderedProductAsync extends AsyncTask<Void, Void, Void> {
 

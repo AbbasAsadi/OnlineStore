@@ -3,6 +3,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="problem_connect_to_internet">خطا در اتصال به اینترنت!</string>
+    <string name="check_network_setting">بررسی تنظیمات شبکه</string>
 
     <string name="price_sample">260000 تومان</string>
     <string name="most_visiting">پربازدیدترین‌ها</string>
@@ -12,9 +14,6 @@
     <string name="add_to_basket">افزودن به سبد خرید</string>
     <string name="related_product">محصولات مشابه</string>
     <color name="relateProductTitle">#78909C</color>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_comment">نظری برای محصول موردنظر یافت نشد</string>
     <string name="comment_users">نظرات کاربران</string>
     <string name="register_digikala">ثبت نام در دیجی کالا</string>
@@ -26,5 +25,39 @@
     <string name="sort_txt">مرتب سازی</string>
     <string name="digikala_txt">دیجی‌کالا</string>
     <string name="share_via">اشتراک گذاری با</string>
+    <string name="empty_basket">سبد خرید شما خالی است!</string>
+    <string name="your_basket">سبد خرید شما</string>
+    <string name="sum_of_basket">جمع کل خرید</string>
+    <string name="finalize_basket">خرید خود را نهایی کنید</string>
+    <string name="warranty_text">گارانتی اصالت و سلامت فیزیکی کالا</string>
+    <string name="warranty">گارانتی:</string>
+    <string name="seller">فروشنده:</string>
+    <string name="count">تعداد:</string>
+    <string name="price">قیمت کل</string>
+    <string name="amazing_suggestion_price">(-) تخفیف شگفت‌انگیز</string>
+    <string name="final_price">قیمت نهایی</string>
+    <string name="delete">حذف</string>
+    <string name="try_again">تلاش مجدد</string>
+    <string name="most_rating">پرامتیازترین‌ها</string>
+    <string name="most_newest">جدیدترین‌ها</string>
+    <string name="price_desc">قیمت از زیاد به کم</string>
+    <string name="price_asc">قیمت از کم به زیاد</string>
 
+
+    <string-array name="product_count">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

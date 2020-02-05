@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.onlinestore.R;
 import com.example.onlinestore.controller.SingleFragmentActivity;
 import com.example.onlinestore.controller.fragment.MainFragment;
+import com.example.onlinestore.controller.fragment.ShoppingBasketFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -55,14 +57,33 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu , menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search_menuitem:
+                break;
+            case R.id.shopping_bag_menuitem:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_activity , ShoppingBasketFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return false;
+    }
+    @Override
     public void onBackPressed() {
         // Handle back click to close menu
-        if (sBackPressed + 1000 > System.currentTimeMillis()) super.onBackPressed();
+        if (sBackPressed + 1000 > System.currentTimeMillis()) {
+            finishAffinity();
+        }
         else
             Toast.makeText(getBaseContext(),
                     "برای خروج یکبار دیگر کلید بازگشت را بفشارید",
@@ -78,12 +99,17 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
 
         switch (id) {
             case R.id.activity_main_drawer_home:
-                //do nothing
+                startActivity(MainActivity.newIntent(this));
                 break;
             case R.id.activity_main_drawer_category:
                 startActivity(CategoryListActivity.newIntent(this, 0));
                 break;
             case R.id.activity_main_drawer_shopping_basket:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_activity , ShoppingBasketFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.activity_main_drawer_Bestselling:
                 //should ask

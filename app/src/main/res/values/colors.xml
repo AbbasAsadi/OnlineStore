@@ -12,5 +12,6 @@
     <color name="cardViewBackground">#FAFAFA</color>
     <color name="productBackGroundColor">#EEEEEE</color>
     <color name="categoryProductColor">#20A6FF</color>
+    <color name="grayText">#686868</color>
 
 </resources>

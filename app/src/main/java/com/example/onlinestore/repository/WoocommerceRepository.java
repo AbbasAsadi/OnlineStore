@@ -3,13 +3,15 @@ package com.example.onlinestore.repository;
 
 import android.util.Log;
 
+import com.example.onlinestore.App;
 import com.example.onlinestore.model.categories.CategoryBody;
 import com.example.onlinestore.model.comment.CommentBody;
+import com.example.onlinestore.model.products.DaoSession;
 import com.example.onlinestore.model.products.ProductBody;
+import com.example.onlinestore.model.products.ShoppingBasketProduct;
+import com.example.onlinestore.model.products.ShoppingBasketProductDao;
 import com.example.onlinestore.network.RetrofitInstance;
 import com.example.onlinestore.network.interfaces.WoocommerceService;
-
-import org.w3c.dom.ls.LSInput;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,14 +20,13 @@ import java.util.List;
 import retrofit2.Call;
 
 public class WoocommerceRepository {
-    private static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
-    private static final String CONSUMER_KEY = "ck_552ea09e65326775023b1e8969bee5ab65a3be38";
-    private static final String CONSUMER_SECRET = "cs_9d3a817430202486c59662290989d5b4c5c3c837";
+    public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
+    public static final String CONSUMER_KEY = "ck_552ea09e65326775023b1e8969bee5ab65a3be38";
+    public static final String CONSUMER_SECRET = "cs_9d3a817430202486c59662290989d5b4c5c3c837";
+    private static final int SPECIAL_SALE_CATEGORY_ID = 119;
     private static final int AMAZING_PRODUCT_TAG = 48;
-    public static final int SPECIAL_SALE_CATEGORY_ID = 119;
     private static WoocommerceRepository sWoocommerceRepository;
     private final String TAG = "WoocommerceRepository";
-    //private List<ProductBody> mAllProducts;
     private List<ProductBody> mAmazingProducts;
     private List<ProductBody> mRecentProducts;
     private List<ProductBody> mPopularProducts;
@@ -34,12 +35,17 @@ public class WoocommerceRepository {
     private List<ProductBody> mSearchedProducts;
     private List<ProductBody> mRelatedProducts;
     private List<CategoryBody> mParentCategoryList;
+    private DaoSession mDaoSession;
+    private ShoppingBasketProductDao mProductDao;
+
 
     private WoocommerceService mWoocommerceService = RetrofitInstance.getInstance(BASE_URL)
             .getRetrofit()
             .create(WoocommerceService.class);
 
     private WoocommerceRepository() {
+        mDaoSession = App.getInstance().getDaoSession();
+        mProductDao = mDaoSession.getShoppingBasketProductDao();
     }
 
     public static WoocommerceRepository getInstance() {
@@ -116,6 +122,14 @@ public class WoocommerceRepository {
 
     }
 
+    public int getBadgeNumber() {
+        int badgeNumber = 0;
+        for (ShoppingBasketProduct product : getShoppingBasketProducts()) {
+            badgeNumber += product.getNumber();
+        }
+        return badgeNumber;
+    }
+
     public List<ProductBody> getSpecialSaleList() {
         return mSpecialSaleList;
     }
@@ -163,5 +177,35 @@ public class WoocommerceRepository {
                         "date");
 
         return call.execute().body();
+    }
+
+    public List<ShoppingBasketProduct> getShoppingBasketProducts() {
+        return mProductDao
+                .loadAll();
+    }
+
+    public ShoppingBasketProduct getSpecificProductOfShoppingBasket(int productId) {
+        return mProductDao
+                .queryBuilder()
+                .where(ShoppingBasketProductDao.Properties.ProductId.eq(productId))
+                .unique();
+    }
+
+    public void insertProductInShoppingBasket(ShoppingBasketProduct product) {
+        ShoppingBasketProduct existProduct =
+                getSpecificProductOfShoppingBasket(product.getProductId());
+        if (existProduct != null) {
+            existProduct.setNumber(existProduct.getNumber());
+            updateShoppingBasketProductList(existProduct);
+        } else
+            mProductDao.insert(product);
+    }
+
+    public void deleteFromShoppingBasket(ShoppingBasketProduct product) {
+        mProductDao.delete(product);
+    }
+
+    public void updateShoppingBasketProductList(ShoppingBasketProduct updatedProduct) {
+        mProductDao.update(updatedProduct);
     }
 }

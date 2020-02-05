@@ -4,10 +4,14 @@ package com.example.onlinestore.controller.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +48,7 @@ public class MainFragment extends Fragment {
     TextView mFullListTopRated;
     @BindView(R.id.full_list_newest_product_text_main_fragment)
     TextView mFullListNewest;
+
     //    @BindView(R.id.)
 //    private RecyclerView mRecyclerViewTopRatedProduct;
     private ProductAdapterHorizontal mProductAdapterAmazingSuggest;
@@ -84,6 +89,7 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, rootView);
         mRepository = WoocommerceRepository.getInstance();
+
 
         mSlider.setAdapter(new MainSliderAdapter());
         mRecyclerViewCategory.setLayoutManager
@@ -173,5 +179,10 @@ public class MainFragment extends Fragment {
         updatePopularProductAdapter();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu , menu);
 
+    }
 }

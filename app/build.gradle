@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -57,4 +57,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation "com.google.android.material:material:1.2.0-alpha04"
 
+    //for greenDao
+    implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'androidx.navigation:navigation-runtime:2.2.0'
 }

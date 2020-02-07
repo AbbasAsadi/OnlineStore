@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,19 +37,19 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private class GetProductsAsync extends AsyncTask<Void, Void, Void> {
-        private final WoocommerceRepository Repository = WoocommerceRepository.getInstance();
+        private final WoocommerceRepository repository = WoocommerceRepository.getInstance();
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Repository.setAmazingProducts();
-                Repository.setTopRatedProducts();
-                Repository.setPopularProducts();
-                Repository.setRecentProducts();
-                Repository.setParentCategoryList();
-                Repository.setSpecialSaleList();
+                repository.setAmazingProducts();
+                repository.setTopRatedProducts();
+                repository.setPopularProducts();
+                repository.setRecentProducts();
+                repository.setParentCategoryList();
+                repository.setSpecialSaleList();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("SplashActivity", e.getMessage(), e);
             }
             return null;
         }

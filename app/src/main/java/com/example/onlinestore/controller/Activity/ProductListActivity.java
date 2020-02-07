@@ -18,17 +18,18 @@ public class ProductListActivity extends SingleFragmentActivity {
     public static final  String TOP_RATED_PRODUCT = "topRatedProduct";
     public static final  String POPULAR_PRODUCT = "popularProduct";
 
-
     public static Intent newIntent(Context context , int categoryId) {
         Intent intent = new Intent(context, ProductListActivity.class);
         intent.putExtra(CATEGORY_ID, categoryId);
         return intent;
     }
+
     public static Intent newIntent(Context context , String listType) {
         Intent intent = new Intent(context, ProductListActivity.class);
         intent.putExtra(LIST_TYPE, listType);
         return intent;
     }
+
     @Override
     public Fragment getFragment() {
         if (getIntent().getExtras().containsKey(CATEGORY_ID)){

@@ -158,5 +158,4 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
 }

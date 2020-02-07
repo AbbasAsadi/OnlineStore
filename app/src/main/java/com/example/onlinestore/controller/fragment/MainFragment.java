@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ public class MainFragment extends Fragment {
     Slider mSlider;
     @BindView(R.id.category_recyclerview)
     RecyclerView mRecyclerViewCategory;
-    @BindView(R.id.amzing_recycleview)
+    @BindView(R.id.amazing_recyclerview)
     RecyclerView mRecyclerViewAmazingSuggest;
     @BindView(R.id.newest_products_recyclerview_main_fragment)
     RecyclerView mRecyclerViewNewestProduct;
@@ -90,7 +89,6 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         mRepository = WoocommerceRepository.getInstance();
 
-
         mSlider.setAdapter(new MainSliderAdapter());
         mRecyclerViewCategory.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
@@ -101,7 +99,6 @@ public class MainFragment extends Fragment {
         mRecyclerViewAmazingSuggest.setLayoutManager(new LinearLayoutManager
                 (mContext, RecyclerView.HORIZONTAL, true));
 
-
         updateNewestProductAdapter();
         mRecyclerViewNewestProduct.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
@@ -110,7 +107,6 @@ public class MainFragment extends Fragment {
         mRecyclerViewPopularProduct.setLayoutManager
                 (new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
 
-
         mFullListTopRated.setOnClickListener(view1 ->
                 mContext.startActivity(ProductListActivity
                         .newIntent(mContext, ProductListActivity.TOP_RATED_PRODUCT)));
@@ -118,7 +114,6 @@ public class MainFragment extends Fragment {
         mFullListNewest.setOnClickListener(view2 ->
                 mContext.startActivity(ProductListActivity
                         .newIntent(mContext, ProductListActivity.NEWEST_PRODUCT)));
-
 
         return rootView;
     }
@@ -179,10 +174,9 @@ public class MainFragment extends Fragment {
         updatePopularProductAdapter();
     }
 
-    @Override
+    /*@Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.main_menu , menu);
-
-    }
+    }*/
 }

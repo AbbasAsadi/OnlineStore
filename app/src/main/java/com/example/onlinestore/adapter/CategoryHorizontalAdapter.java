@@ -28,7 +28,6 @@ public class CategoryHorizontalAdapter extends RecyclerView.Adapter<CategoryHori
         mContext = context;
     }
 
-
     public void setCategoryList(List<CategoryBody> categoryList) {
         mCategoryList = categoryList;
     }

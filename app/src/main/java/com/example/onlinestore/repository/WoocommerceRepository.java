@@ -23,8 +23,10 @@ public class WoocommerceRepository {
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
     public static final String CONSUMER_KEY = "ck_552ea09e65326775023b1e8969bee5ab65a3be38";
     public static final String CONSUMER_SECRET = "cs_9d3a817430202486c59662290989d5b4c5c3c837";
+    public static final int PER_PAGE_TOP_PRODUCT = 20;
     private static final int SPECIAL_SALE_CATEGORY_ID = 119;
     private static final int AMAZING_PRODUCT_TAG = 48;
+    public static final String ORDER_BY_RATING = "rating";
     private static WoocommerceRepository sWoocommerceRepository;
     private final String TAG = "WoocommerceRepository";
     private List<ProductBody> mAmazingProducts;
@@ -37,7 +39,6 @@ public class WoocommerceRepository {
     private List<CategoryBody> mParentCategoryList;
     private DaoSession mDaoSession;
     private ShoppingBasketProductDao mProductDao;
-
 
     private WoocommerceService mWoocommerceService = RetrofitInstance.getInstance(BASE_URL)
             .getRetrofit()
@@ -88,8 +89,8 @@ public class WoocommerceRepository {
 
     public void setTopRatedProducts() throws IOException {
         Call<List<ProductBody>> call = mWoocommerceService
-                .getProductByOrder(CONSUMER_KEY, CONSUMER_SECRET, 20, "rating");
-        mTopRatedProducts = new ArrayList<>();
+                .getProductByOrder(CONSUMER_KEY, CONSUMER_SECRET, PER_PAGE_TOP_PRODUCT, ORDER_BY_RATING);
+//        mTopRatedProducts = new ArrayList<>();
         mTopRatedProducts = call.execute().body();
         if (mTopRatedProducts == null) {
             Log.d(TAG, "setBestSellingList: list is null");
@@ -194,6 +195,7 @@ public class WoocommerceRepository {
     public void insertProductInShoppingBasket(ShoppingBasketProduct product) {
         ShoppingBasketProduct existProduct =
                 getSpecificProductOfShoppingBasket(product.getProductId());
+
         if (existProduct != null) {
             existProduct.setNumber(existProduct.getNumber());
             updateShoppingBasketProductList(existProduct);

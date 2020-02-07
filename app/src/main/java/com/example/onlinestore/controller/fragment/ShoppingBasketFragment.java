@@ -91,17 +91,17 @@ public class ShoppingBasketFragment extends Fragment {
         ButterKnife.bind(this, view);
         Log.d(TAG, "onCreateView: ");
 
-
         mProgressBar.setVisibility(View.GONE);
-        updateUi();
+        updateUI();
 
         return view;
     }
 
-    private void updateUi() {
+    private void updateUI() {
         List<ShoppingBasketProduct> products = WoocommerceRepository
                 .getInstance().getShoppingBasketProducts();
-        Log.d(TAG, "updateUi: ");
+
+        Log.d(TAG, "updateUI: ");
         if (products == null || products.isEmpty()) {
             emptyBasketText.setVisibility(View.VISIBLE);
             productRecyclerView.setVisibility(View.GONE);
@@ -169,7 +169,6 @@ public class ShoppingBasketFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ShoppingBasketViewHolder holder, int position) {
-
             Picasso.get().load(mProductList.get(position).getImageSrc())
                     .placeholder(R.drawable.digikala_place_holder)
                     .into(holder.mProductImage);
@@ -177,13 +176,9 @@ public class ShoppingBasketFragment extends Fragment {
             holder.mTitleProduct.setText(mProductList.get(position).getTitle());
 
             initSpinnerAdapter(holder, position);
-
             initShortDescription(holder, position);
-
             initPrice(holder, position);
-
             initDiscount(holder, position);
-
             initFinalPrice(holder, position);
 
             holder.mDeleteProduct.setOnClickListener(view -> {
@@ -193,14 +188,14 @@ public class ShoppingBasketFragment extends Fragment {
                                 .getShoppingBasketProducts()
                                 .get(position));
                 mSumBasketPrice = 0;
-                for (ShoppingBasketProduct product:
-                        WoocommerceRepository.getInstance().getShoppingBasketProducts() ){
+                for (ShoppingBasketProduct product :
+                        WoocommerceRepository.getInstance().getShoppingBasketProducts()) {
                     mSumBasketPrice += (Double.parseDouble(product.getFinalPrice()) * product.getNumber());
                 }
                 String sum = App
                         .getInstance()
                         .getPersianNumber(mSumBasketPrice)
-                        +" تومان";
+                        + " تومان";
                 sumBasketPrice.setText(sum);
                 String badge = App
                         .getInstance()

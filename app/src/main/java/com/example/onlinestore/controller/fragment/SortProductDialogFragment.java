@@ -101,48 +101,15 @@ public class SortProductDialogFragment extends DialogFragment implements View.On
                 .getRetrofit()
                 .create(WoocommerceService.class);
         switch (view.getId()) {
-
             case R.id.radio_price_asc: {
                 radioChecked = 0;
-                Call<List<ProductBody>> call = mWoocommerceService
-                        .getSortedProductList(CONSUMER_KEY,
-                                CONSUMER_SECRET,
-                                25,
-                                "price",
-                                "asc");
-                call.enqueue(new Callback<List<ProductBody>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductBody>> call, Response<List<ProductBody>> response) {
-                        ProductListFragment.getLiveProductList().setValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductBody>> call, Throwable t) {
-
-                    }
-                });
+                fetchSortedData(mWoocommerceService, "price", "asc");
                 getDialog().dismiss();
                 break;
             }
             case R.id.radio_price_desc: {
                 radioChecked = 1;
-                Call<List<ProductBody>> call = mWoocommerceService
-                        .getSortedProductList(CONSUMER_KEY,
-                                CONSUMER_SECRET,
-                                25,
-                                "price",
-                                "desc");
-                call.enqueue(new Callback<List<ProductBody>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductBody>> call, Response<List<ProductBody>> response) {
-                        ProductListFragment.getLiveProductList().setValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductBody>> call, Throwable t) {
-
-                    }
-                });
+                fetchSortedData(mWoocommerceService, "price", "desc");
                 getDialog().dismiss();
                 break;
             }
@@ -155,49 +122,37 @@ public class SortProductDialogFragment extends DialogFragment implements View.On
 
             case R.id.radio_rating: {
                 radioChecked = 3;
-                Call<List<ProductBody>> call = mWoocommerceService
-                        .getSortedProductList(CONSUMER_KEY,
-                                CONSUMER_SECRET,
-                                25,
-                                "rating",
-                                "desc");
-                call.enqueue(new Callback<List<ProductBody>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductBody>> call, Response<List<ProductBody>> response) {
-                        ProductListFragment.getLiveProductList().setValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductBody>> call, Throwable t) {
-
-                    }
-                });
+                fetchSortedData(mWoocommerceService, "rating", "desc");
                 getDialog().dismiss();
                 break;
             }
             case R.id.radio_newest: {
                 radioChecked = 4;
-                Call<List<ProductBody>> call = mWoocommerceService
-                        .getSortedProductList(CONSUMER_KEY,
-                                CONSUMER_SECRET,
-                                25,
-                                "date",
-                                "desc");
-                call.enqueue(new Callback<List<ProductBody>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductBody>> call, Response<List<ProductBody>> response) {
-                        ProductListFragment.getLiveProductList().setValue(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductBody>> call, Throwable t) {
-
-                    }
-                });
+                fetchSortedData(mWoocommerceService, "date", "desc");
                 getDialog().dismiss();
                 break;
             }
 
         }
+    }
+
+    private void fetchSortedData(WoocommerceService mWoocommerceService, String price, String asc) {
+        Call<List<ProductBody>> call = mWoocommerceService
+                .getSortedProductList(CONSUMER_KEY,
+                        CONSUMER_SECRET,
+                        25,
+                        price,
+                        asc);
+        call.enqueue(new Callback<List<ProductBody>>() {
+            @Override
+            public void onResponse(Call<List<ProductBody>> call, Response<List<ProductBody>> response) {
+                ProductListFragment.getLiveProductList().setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductBody>> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -146,10 +146,13 @@ public class DetailProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_detail_product, container, false);
         ButterKnife.bind(this, rootView);
+
         GetProductAsync async = new GetProductAsync();
         async.execute();
+
         mProgressBar.setVisibility(View.VISIBLE);
         mParentFragmentProduct.setVisibility(View.GONE);
+
         Observer<ProductBody> productObserver = productBody -> {
             if (getLiveProduct().getValue() != null) {
 
@@ -160,11 +163,8 @@ public class DetailProductFragment extends Fragment {
                 mTitleProduct.setText(getLiveProduct().getValue().getName());
 
                 setAmazingSuggestionStatus();
-
                 setRegularPrice();
-
                 setPrice();
-
                 setShortDescription();
 
                 mCategoryProductRecyclerView
@@ -172,17 +172,13 @@ public class DetailProductFragment extends Fragment {
                                 (getActivity(), RecyclerView.HORIZONTAL, true));
                 updateCategoryAdapter();
 
-
                 mRelatedProductRecyclerView
                         .setLayoutManager(new LinearLayoutManager(
                                 getActivity(), RecyclerView.HORIZONTAL, true));
 
                 handleClickOnCommentButton();
-
                 handleShareProductLink();
-
                 handleAddToShoppingBasket();
-
                 handleClickOnShoppingBasket();
 
                 String badge = App
@@ -200,12 +196,14 @@ public class DetailProductFragment extends Fragment {
                                 .commit());
             }
         };
+
         getLiveProduct().observe(this, productObserver);
 
         Observer<List<ProductBody>> relatedProductListObserver = productBodies ->
                 updateRelatedProductAdapter();
 
         getLiveRelatedProduct().observe(this, relatedProductListObserver);
+
         return rootView;
     }
 
@@ -226,7 +224,9 @@ public class DetailProductFragment extends Fragment {
                     mProduct.getImages().get(0).getSrc(),
                     mProduct.getRegularPrice(),
                     mProduct.getPrice());
+
             mRepository.insertProductInShoppingBasket(basketProduct);
+
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_product_Activity, ShoppingBasketFragment.newInstance())
                     .addToBackStack(null)
@@ -311,7 +311,6 @@ public class DetailProductFragment extends Fragment {
             mRelatedProductAdapter.notifyDataSetChanged();
         }
         mRelatedProductRecyclerView.setAdapter(mRelatedProductAdapter);
-
     }
 
     private void updateCategoryAdapter() {
@@ -389,6 +388,7 @@ public class DetailProductFragment extends Fragment {
             super.onPostExecute(aVoid);
             getLiveRelatedProduct().setValue(relatedProduct);
             getLiveProduct().setValue(mProduct);
+
             mProgressBar.setVisibility(View.GONE);
             mParentFragmentProduct.setVisibility(View.VISIBLE);
         }

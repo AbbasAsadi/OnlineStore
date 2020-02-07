@@ -65,11 +65,9 @@ public class ProductListFragment extends Fragment {
     private ProductAdapter mProductAdapter;
     private String mListType = "empty";
 
-
     public ProductListFragment() {
         // Required empty public constructor
     }
-
 
     private ProductListFragment(int id) {
         mCategoryId = id;
@@ -118,7 +116,6 @@ public class ProductListFragment extends Fragment {
         async.execute();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,8 +141,7 @@ public class ProductListFragment extends Fragment {
         setSortText();
 
         Observer<List<ProductBody>> observer = productBodies -> {
-            if (getLiveProductList().getValue() == null ||
-                    getLiveProductList().getValue().isEmpty()) {
+            if (productBodies == null || productBodies.isEmpty()) {
                 mEmptyListText.setVisibility(View.VISIBLE);
                 mProductsListRecyclerView.setVisibility(View.GONE);
             } else {
